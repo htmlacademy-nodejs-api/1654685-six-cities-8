@@ -1,7 +1,9 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Карлен Пиревердиев](https://up.htmlacademy.ru/nodejs-api/8/user/1654685).
-* Наставник: [Руслан Семак](https://htmlacademy.ru/profile/id1451913).
+* Наставник: [Руслан Семак](https://htmlacademy.ru/profile/id1451913). 
+
+Демо-проект [«Куплю. Продам»](https://github.com/htmlacademy-nodejs-api/buy-and-sell-8/pulls?q=is%3Apr+is%3Aclosed).
 
 ---
 
