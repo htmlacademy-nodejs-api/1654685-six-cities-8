@@ -1,11 +1,12 @@
-export type Coordinates = {
+export interface Coordinates {
   /** Latitude */
   x: number;
 
   /** Longitude */
   y: number;
-};
+}
 
+/** Сущность */
 export interface Entity {
   id: string;
 
