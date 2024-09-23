@@ -4,7 +4,8 @@ import { Command, Logger } from './index.js';
 export class Commander {
   private commandMap: Record<string, Command> = {};
   private commandNameMap: Record<string, string> = {};
-  private defaultCommand: string = '';
+
+  private readonly defaultCommand: string = '';
 
   constructor(defaultCommand: string) {
     this.defaultCommand = defaultCommand;

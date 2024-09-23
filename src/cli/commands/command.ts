@@ -17,7 +17,7 @@ export abstract class Command {
    * @example -h */
   readonly alias?: string;
 
-  /** Описание */
+  /** Параметры команды */
   readonly params?: string[];
 
   /** Получить данные о команде */
