@@ -33,10 +33,12 @@ export class Commander {
       const command = this.commandMap[name] || this.commandMap[this.commandNameMap[name]];
 
       if (!command) {
-        Logger.warning('⚠️ Command not found. __The default command__ has been run:\n');
+        Logger.warning(
+          `⚠️ Команда не найдена! ${this.defaultCommand ? `Запущена команда {${this.defaultCommand}}:\n` : ''}`
+        );
       }
 
-      (command ? command : this.commandMap[this.defaultCommand]).run(args, this.commands);
+      (command ? command : this.commandMap[this.defaultCommand])?.run(args, this.commands);
     });
   }
 }
