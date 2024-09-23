@@ -8,6 +8,8 @@ export enum UserType {
   PRO = 'pro',
 }
 
+/** Пользователь
+ * @desc Описание [Сущности]{@link https://up.htmlacademy.ru/nodejs-api/8/project/six-cities#user-entity} */
 export interface User extends Entity {
   /** Имя
    * @desc Мин. 1 символ, макс. - 15 */

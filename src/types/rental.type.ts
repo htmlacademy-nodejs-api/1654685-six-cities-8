@@ -26,6 +26,8 @@ export enum RentalComfort {
   FRIDGE = 'Fridge',
 }
 
+/** Предложение по аренде
+ * @desc Описание [Сущности]{@link https://up.htmlacademy.ru/nodejs-api/8/project/six-cities#offer-entity} */
 export interface Rental extends Entity {
   /** Наименование
    * @desc Мин. 10 символов, макс. - 100 */

@@ -16,6 +16,8 @@ export interface Entity {
   updatedAt: string;
 }
 
+/** Комментарий
+ * @desc Описание [Сущности]{@link https://up.htmlacademy.ru/nodejs-api/8/project/six-cities#comment-entity} */
 export interface Comment {
   /** Текст комментария
    * @desc Мин. 5 символов, макс. 1024 */
