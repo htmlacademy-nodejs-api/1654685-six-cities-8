@@ -5,7 +5,8 @@ import { Command, Logger } from '@/cli/index.js';
 export class ImportCommand extends Command {
   readonly name = '--import';
   readonly alias = '-i';
-  readonly description = 'Import TSV file';
+  readonly description = 'Импортирует данные из TSV файла';
+  readonly params = ['path'];
 
   private import(filePath: string): string {
     const fullPath = path.join(process.cwd(), filePath);

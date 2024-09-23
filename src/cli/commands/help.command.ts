@@ -3,10 +3,12 @@ import { Command, CommandInfo, Logger } from '@/cli/index.js';
 export class HelpCommand extends Command {
   readonly name = '--help';
   readonly alias = '-h';
-  readonly description = 'Get help';
+  readonly description = 'Выводит справочную информацию';
 
   public async run(_args: string[], commands: CommandInfo[]) {
-    Logger.info('Подготовка данных для сервера REST API.\nПример: {--<command> [--arguments]}');
+    Logger.info(
+      'Подготовка данных для REST API сервера.\nПример: {main.js --<command> [--arguments]}'
+    );
     Logger.info('\nДоступные команды:');
 
     const maxCommandLength = commands.reduce(

@@ -4,7 +4,7 @@ import { Command, Logger } from '@/cli/index.js';
 export class VersionCommand extends Command {
   readonly name = '--version';
   readonly alias = '-v';
-  readonly description = 'Get package version';
+  readonly description = 'Выводит номер версии';
 
   private getVersion(): string {
     if (process.env?.npm_package_version) {
