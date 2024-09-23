@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
-import { Abstract, Logger } from '@/cli/index.js';
+import { Command, Logger } from '@/cli/index.js';
 
-export class VersionCommand extends Abstract {
+export class VersionCommand extends Command {
   readonly name = '--version';
   readonly alias = '-v';
   readonly description = 'Get package version';

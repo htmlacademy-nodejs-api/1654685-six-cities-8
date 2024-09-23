@@ -1,8 +1,8 @@
 import { parseArgv } from "@/cli/utils/parser.js";
-import { Abstract, Logger } from './index.js';
+import { Command, Logger } from './index.js';
 
 export class Commander {
-  private commandMap: Record<string, Abstract> = {};
+  private commandMap: Record<string, Command> = {};
   private commandNameMap: Record<string, string> = {};
   private defaultCommand: string = '';
 
@@ -14,7 +14,7 @@ export class Commander {
     return Object.keys(this.commandMap).map((key) => this.commandMap[key].info)
   }
 
-  public register(commands: Abstract[]) {
+  public register(commands: Command[]) {
     commands.forEach((command) => {
       this.commandMap[command.name] = command;
 
@@ -24,7 +24,7 @@ export class Commander {
     });
   }
 
-  public async run(argv: string[], commands?: Abstract[]) {
+  public async run(argv: string[], commands?: Command[]) {
     if (commands?.length) {
       this.register(commands)
     }
@@ -33,7 +33,7 @@ export class Commander {
       const command = this.commandMap[name] || this.commandMap[this.commandNameMap[name]];
 
       if (!command) {
-        Logger.warning('Abstract not found.')
+        Logger.warning('⚠️ Command not found. __The default command__ has been run:\n')
       }
 
       ;(command ? command : this.commandMap[this.defaultCommand]).run(args, this.commands);

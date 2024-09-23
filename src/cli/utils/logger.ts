@@ -20,8 +20,8 @@ export class Logger {
     console.log(chalk.green(...attrs));
   }
 
-  public static warning = (...attrs: any) => {
-    console.warn(...attrs)
+  public static warning = (...attrs: string[]) => {
+    console.warn(...attrs.map(attr => this.getStyledText(attr)))
   }
 
   public static error = (error: unknown, message?: string) => {

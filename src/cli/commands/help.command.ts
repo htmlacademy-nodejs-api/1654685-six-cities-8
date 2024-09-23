@@ -1,6 +1,6 @@
-import { Abstract, CommandInfo, Logger } from '@/cli/index.js';
+import { Command, CommandInfo, Logger } from '@/cli/index.js';
 
-export class HelpCommand extends Abstract {
+export class HelpCommand extends Command {
   readonly name = '--help';
   readonly alias = '-h';
   readonly description = 'Get help';

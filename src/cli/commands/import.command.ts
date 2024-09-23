@@ -1,8 +1,8 @@
 import path from 'node:path';
 import { readFileSync } from 'node:fs';
-import { Abstract, Logger } from '@/cli/index.js';
+import { Command, Logger } from '@/cli/index.js';
 
-export class ImportCommand extends Abstract {
+export class ImportCommand extends Command {
   readonly name = '--import';
   readonly alias = '-i';
   readonly description = 'Import TSV file';

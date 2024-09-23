@@ -1,6 +1,6 @@
-import { Abstract, Logger } from '@/cli/index.js';
+import { Command, Logger } from '@/cli/index.js';
 
-export class GenerateCommand extends Abstract {
+export class GenerateCommand extends Command {
   readonly name = '--generate';
   readonly alias = '-g';
   readonly description = 'Generate data';

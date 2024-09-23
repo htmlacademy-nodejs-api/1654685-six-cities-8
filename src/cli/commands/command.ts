@@ -1,6 +1,6 @@
 export type CommandInfo = { name: string; description: string; pattern: string; alias?: string; params?: string[] }
 
-export abstract class Abstract {
+export abstract class Command {
   /** @example --help */
   abstract readonly name: string
 
