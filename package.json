@@ -11,10 +11,17 @@
   "scripts": {
     "start": "npm run build && node ./dist/main.js",
     "build": "npm run clean && npm run compile",
+    "cli:version": "npx tsx src/main.ts --version",
+    "cli:help": "npx tsx src/main.ts --help",
+    "cli:import": "npx tsx src/main.ts --import mocks/table.tsv",
+    "cli:generate": "npx tsx src/main.ts --generate",
     "lint": "eslint src/ --ext .ts",
     "compile": "tsc -p tsconfig.json",
     "clean": "rimraf dist",
-    "ts": "tsc --noEmit && node --no-warnings=--no-warnings=ExperimentalWarning --loader ts-node/esm"
+    "ts": "tsc --noEmit && node --no-warnings=ExperimentalWarning --loader ts-node/esm"
+  },
+  "dependencies": {
+    "chalk": "5.3.0"
   },
   "devDependencies": {
     "@types/node": "20.12.7",
