@@ -8,17 +8,17 @@ export class VersionCommand extends Command {
 
   private getVersion(): string {
     if (process.env?.npm_package_version) {
-      return process.env.npm_package_version
+      return process.env.npm_package_version;
     }
 
     if (!process.env?.npm_package_json) {
-      throw new Error('Invalid package.json')
+      throw new Error('Invalid package.json');
     }
 
-    const data = JSON.parse(readFileSync(process.env.npm_package_json, { encoding: 'utf8' }))
+    const data = JSON.parse(readFileSync(process.env.npm_package_json, { encoding: 'utf8' }));
 
     if (!data?.version) {
-      throw new Error('Invalid version')
+      throw new Error('Invalid version');
     }
 
     return data.version;

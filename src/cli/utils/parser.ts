@@ -12,4 +12,4 @@ export const parseArgv = (argv: string[]) => {
   }
 
   return list;
-}
+};

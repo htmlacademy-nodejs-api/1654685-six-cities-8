@@ -1,4 +1,4 @@
-import { Entity } from "@/types/index.js";
+import { Entity } from '@/types/index.js';
 
 export enum UserType {
   /** Обычный */
@@ -11,21 +11,21 @@ export enum UserType {
 export interface User extends Entity {
   /** Имя
    * @desc Мин. 1 символ, макс. - 15 */
-  name: string
+  name: string;
 
   /** Электронная почта
    * @unique
    * @desc Валидный адрес электронной почты */
-  email: string
+  email: string;
 
   /** Аватар пользователя
    * @desc Изображение пользователя в формате .jpg или .png */
-  avatar?: string
+  avatar?: string;
 
   /** Пароль
    * @desc Мин. 6 символов, макс. - 12 */
-  password: string
+  password: string;
 
   /** Тип пользователя */
-  type: UserType
+  type: UserType;
 }

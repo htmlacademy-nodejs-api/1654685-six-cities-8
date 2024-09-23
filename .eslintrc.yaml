@@ -6,8 +6,29 @@ parser: "@typescript-eslint/parser"
 parserOptions:
   ecmaVersion: 2021
   sourceType: module
+  warnOnUnsupportedTypeScriptVersion: false
 plugins:
   - "@typescript-eslint"
+  - "prettier"
 extends:
   - "plugin:@typescript-eslint/recommended"
   - "htmlacademy/node"
+  - "plugin:prettier/recommended"
+rules:
+  prettier/prettier:
+    - "error"
+    - semi: true
+      tabWidth: 2
+      printWidth: 100
+      useTabs: false
+      singleQuote: true
+      insertPragma: false
+      bracketSpacing: true
+      requirePragma: false
+      jsxSingleQuote: false
+      bracketSameLine: false
+      quoteProps: "as-needed"
+      arrowParens: "always"
+      trailingComma: "es5"
+      proseWrap: "never"
+      endOfLine: "lf"

@@ -5,7 +5,7 @@ import {
   HelpCommand,
   VersionCommand,
   ImportCommand,
-  GenerateCommand
+  GenerateCommand,
 } from '@/cli/index.js';
 
 new Commander('--help').run(process.argv, [

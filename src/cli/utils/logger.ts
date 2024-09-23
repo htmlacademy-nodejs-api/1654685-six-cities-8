@@ -1,8 +1,8 @@
-import chalk from "chalk";
+import chalk from 'chalk';
 
-const BRACES_REGEX = /{([a-zA-Z0-9А-Яа-я_()\]\[<>\-. ]+)}/gm
-const ASTERISKS_REGEX = /\*\*([a-zA-Z0-9А-Яа-я_()\]\[<>\-. ]+)\*\*/gm
-const UNDERLINE_REGEX = /__([a-zA-Z0-9А-Яа-я_()\]\[<>\-. ]+)__/gm
+const BRACES_REGEX = /{([a-zA-Z0-9А-Яа-я_()[\]<>\-. ]+)}/gm;
+const ASTERISKS_REGEX = /\*\*([a-zA-Z0-9А-Яа-я_()[\]<>\-. ]+)\*\*/gm;
+const UNDERLINE_REGEX = /__([a-zA-Z0-9А-Яа-я_()[\]<>\-. ]+)__/gm;
 
 export class Logger {
   private static getStyledText(message: string) {
@@ -13,18 +13,18 @@ export class Logger {
   }
 
   public static info(...attrs: string[]) {
-    console.log(...attrs.map(attr => this.getStyledText(attr)))
+    console.log(...attrs.map((attr) => this.getStyledText(attr)));
   }
 
-  public static success(...attrs: any) {
+  public static success(...attrs: string[]) {
     console.log(chalk.green(...attrs));
   }
 
   public static warning = (...attrs: string[]) => {
-    console.warn(...attrs.map(attr => this.getStyledText(attr)))
-  }
+    console.warn(...attrs.map((attr) => this.getStyledText(attr)));
+  };
 
   public static error = (error: unknown, message?: string) => {
     console.error(error instanceof Error || typeof error === 'string' ? error : message);
-  }
+  };
 }

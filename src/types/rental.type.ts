@@ -1,4 +1,4 @@
-import { Entity } from "@/types/index.js";
+import { Entity } from '@/types/index.js';
 
 export enum City {
   PARIS = 'Paris',
@@ -29,64 +29,64 @@ export enum RentalComfort {
 export interface Rental extends Entity {
   /** Наименование
    * @desc Мин. 10 символов, макс. - 100 */
-  name: string,
+  name: string;
 
   /** Описание предложения
    * @desc Мин. 20 символов, макс. - 1024 */
   description: string;
 
   /** Дата публикации предложения */
-  publishedAt: string
+  publishedAt: string;
 
   /** Город. */
-  city: City
+  city: City;
 
   /** Превью изображения
    * @desc Ссылка на изображение */
-  preview: string
+  preview: string;
 
   /** Фотографии жилья
    * @desc Список ссылок на фотографии жилья. Всегда 6 фотографий */
-  photos: string[]
+  photos: string[];
 
   /** Флаг «Премиум»
    * @desc Признак премиальности предложения */
-  isPremium?: boolean
+  isPremium?: boolean;
 
   /** Флаг «Избранное»
    * @desc Признак того, что предложение принадлежит списку избранных предложений пользователя */
-  isFavorite?: boolean
+  isFavorite?: boolean;
 
   /** Рейтинг
    * @desc Число от 1 до 5, допускаются числа с запятой (1 знак после запятой) */
-  rating?: number
+  rating?: number;
 
   /** Тип жилья */
-  type: RentalType
+  type: RentalType;
 
   /** Количество комнат
    * @desc Мин. 1, Макс. 8 */
-  roomsCount: number
+  roomsCount: number;
 
   /** Количество гостей
    * @desc Мин. 1, Макс. 10 */
-  guestsCount: number
+  guestsCount: number;
 
   /** Стоимость аренды
    * @desc Мин. 100, Макс. 100 000 */
-  price: number
+  price: number;
 
   /** Список удобств */
-  comforts: RentalComfort[] | RentalComfort
+  comforts: RentalComfort[] | RentalComfort;
 
   /** Автор предложения */
-  authorId: string
+  authorId: string;
 
   /** Количество комментариев
    * @desc Рассчитывается автоматически */
-  commentsCount: number
+  commentsCount: number;
 
   /** Координаты предложения для аренды
    * @desc Координаты представлены широтой и долготой */
-  coordinates: [number, number]
+  coordinates: [number, number];
 }
