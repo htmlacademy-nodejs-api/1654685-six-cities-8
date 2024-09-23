@@ -16,18 +16,18 @@ export class ImportCommand extends Command {
 
   public async run([filePath, ...args]: string[]) {
     if (!filePath) {
-      Logger.error(`${filePath} — Invalid file path!`);
+      Logger.error(`${filePath} — Неверный путь к файлу!`);
       return;
     }
 
     if (args.length) {
-      Logger.warning('⚠️ Too many arguments for the command');
+      Logger.warning('⚠️ Слишком много аргументов для команды');
     }
 
     try {
       Logger.info(this.import(filePath));
     } catch (error: unknown) {
-      Logger.error(error, `Failed to load file with path: ${filePath}`);
+      Logger.error(error, `Не удалось загрузить файл с указанием пути: ${filePath}`);
     }
   }
 }

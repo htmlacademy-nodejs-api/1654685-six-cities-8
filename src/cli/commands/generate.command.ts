@@ -8,9 +8,9 @@ export class GenerateCommand extends Command {
 
   public async run(params: string[]) {
     try {
-      Logger.warning('In development... 😊');
+      Logger.warning('В разработке... 😊');
     } catch (error: unknown) {
-      Logger.error(error, `Failed to create file with specified parameters (${params})`);
+      Logger.error(error, `Не удалось создать файл с указанными параметрами (${params})`);
     }
   }
 }

@@ -12,13 +12,13 @@ export class VersionCommand extends Command {
     }
 
     if (!process.env?.npm_package_json) {
-      throw new Error('Invalid package.json');
+      throw new Error('Ошибка при чтении `package.json`');
     }
 
     const data = JSON.parse(readFileSync(process.env.npm_package_json, { encoding: 'utf8' }));
 
     if (!data?.version) {
-      throw new Error('Invalid version');
+      throw new Error('Ошибка при чтении свойства `version`');
     }
 
     return data.version;
@@ -26,9 +26,9 @@ export class VersionCommand extends Command {
 
   public async run(): Promise<void> {
     try {
-      Logger.info(`Version: **${this.getVersion()}**`);
+      Logger.info(`Версия: **${this.getVersion()}**`);
     } catch (error: unknown) {
-      Logger.error(error, 'Failed to read version');
+      Logger.error(error, 'Не удалось прочитать версию пакета');
     }
   }
 }
