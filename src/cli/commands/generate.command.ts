@@ -1,12 +1,12 @@
 import { Command, Logger } from '@/cli/index.js';
 
-export class GenerateCommand extends Command {
+export class GenerateCommand implements Command {
   readonly name = '--generate';
   readonly alias = '-g';
   readonly description = 'Генерирует произвольное количество тестовых данных';
   readonly params = ['n', 'filepath', 'url'];
 
-  public async run(params: string[]) {
+  public async execute(params: string[]) {
     try {
       Logger.warning('В разработке... 😊');
     } catch (error: unknown) {

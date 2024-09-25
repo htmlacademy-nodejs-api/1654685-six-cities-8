@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { Command, Logger } from '@/cli/index.js';
 
-export class VersionCommand extends Command {
+export class VersionCommand implements Command {
   readonly name = '--version';
   readonly alias = '-v';
   readonly description = 'Выводит номер версии';
@@ -24,7 +24,7 @@ export class VersionCommand extends Command {
     return data.version;
   }
 
-  public async run(): Promise<void> {
+  public async execute(): Promise<void> {
     try {
       Logger.info(`Версия: **${this.getVersion()}**`);
     } catch (error: unknown) {

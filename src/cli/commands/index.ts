@@ -1,4 +1,4 @@
-export * from './command.js';
+export * from './command.interface.js';
 
 export * from './help.command.js';
 export * from './version.command.js';

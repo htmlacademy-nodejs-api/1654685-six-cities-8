@@ -2,7 +2,7 @@ import path from 'node:path';
 import { readFileSync } from 'node:fs';
 import { Command, Logger } from '@/cli/index.js';
 
-export class ImportCommand extends Command {
+export class ImportCommand implements Command {
   readonly name = '--import';
   readonly alias = '-i';
   readonly description = 'Импортирует данные из TSV файла';
@@ -14,7 +14,7 @@ export class ImportCommand extends Command {
     return readFileSync(fullPath, { encoding: 'utf8' });
   }
 
-  public async run([filePath, ...args]: string[]) {
+  public async execute([filePath, ...args]: string[]) {
     if (!filePath) {
       Logger.error(`${filePath} — Неверный путь к файлу!`);
       return;

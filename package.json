@@ -11,9 +11,9 @@
   "scripts": {
     "start": "npm run build && node ./dist/main.js",
     "build": "npm run clean && npm run compile",
-    "cli:version": "npx tsx src/main.ts --version",
     "cli:help": "npx tsx src/main.ts --help",
-    "cli:import": "npx tsx src/main.ts --import mocks/table.tsv",
+    "cli:version": "npx tsx src/main.ts --version",
+    "cli:import": "npx tsx src/main.ts --import mocks/mock-data.tsv",
     "cli:generate": "npx tsx src/main.ts --generate",
     "lint": "eslint src/ --ext .ts",
     "lint:fix": "npm run lint -- --fix",

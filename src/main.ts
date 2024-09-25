@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
 import {
-  Commander,
+  CliApplication,
   HelpCommand,
   VersionCommand,
   ImportCommand,
   GenerateCommand,
 } from '@/cli/index.js';
 
-new Commander('--help').run(process.argv, [
+new CliApplication('--help').processCommand(process.argv, [
   new VersionCommand(),
   new HelpCommand(),
   new ImportCommand(),
