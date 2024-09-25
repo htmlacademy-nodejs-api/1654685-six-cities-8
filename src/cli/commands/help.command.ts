@@ -14,7 +14,7 @@ export class HelpCommand implements Command {
   }
 
   public async execute(_args: string[], commands: CommandInfo[]) {
-    const cmds = commands.map((command) => ({
+    const list = commands.map((command) => ({
       ...command,
       pattern: this.getPattern(command),
     }));
@@ -24,12 +24,12 @@ export class HelpCommand implements Command {
     );
     Logger.info('\nДоступные команды:');
 
-    const maxCommandLength = cmds.reduce(
+    const maxCommandLength = list.reduce(
       (prev, value) => (prev > value.pattern.length ? prev : value.pattern.length),
       0
     );
 
-    cmds.forEach((command) => {
+    list.forEach((command) => {
       Logger.info(
         ` **${command.pattern}**${''.padEnd(
           maxCommandLength - command.pattern.length,

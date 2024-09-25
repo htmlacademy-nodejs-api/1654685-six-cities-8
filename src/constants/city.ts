@@ -1,4 +1,4 @@
-import { City, Coordinates } from '@/types/index.js';
+import { City, Coordinates } from '@/shared/types/index.js';
 
 export const coordinatesCityMap: Record<City, Coordinates> = {
   [City.PARIS]: { x: 48.85661, y: 2.351499 },
