@@ -1,6 +1,11 @@
 import path from 'node:path';
 import { readFileSync } from 'node:fs';
 import { Command, Logger } from '@/cli/index.js';
+import { TSVOfferFileReader } from '@/shared/libs/index.js';
+import { END_EVENT_NAME, LINE_END_EVENT_NAME } from '@/constants/index.js';
+import { declination } from '@/shared/helpers/index.js';
+import chalk from 'chalk';
+import { Offer } from '@/shared/types/index.js';
 
 export class ImportCommand implements Command {
   readonly name = '--import';
@@ -9,7 +14,23 @@ export class ImportCommand implements Command {
   readonly params = ['path'];
 
   private import(filePath: string): string {
-    const fullPath = path.join(process.cwd(), filePath);
+    const fullPath = path.join(process.cwd(), filePath.trim());
+    const fileReader = new TSVOfferFileReader(fullPath);
+
+    fileReader.on(LINE_END_EVENT_NAME, (offer: Offer, index) => {
+      Logger.data(`\nИмпортирована ${chalk.bold.magenta(`${index}-ая`)} строка:`, offer);
+    });
+    fileReader.on(END_EVENT_NAME, (count: number) => {
+      Logger.info(
+        `\nИмпортировано **${count} ${declination(count, ['строка', 'строки', 'строк'])}**`
+      );
+    });
+
+    try {
+      fileReader.read();
+    } catch (error: unknown) {
+      Logger.error(error, 'Непредвиденная ошибка при чтении файла');
+    }
 
     return readFileSync(fullPath, { encoding: 'utf8' });
   }
