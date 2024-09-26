@@ -13,7 +13,7 @@
     "build": "npm run clean && npm run compile",
     "cli:help": "npx tsx src/main.cli.ts --help",
     "cli:version": "npx tsx src/main.cli.ts --version",
-    "cli:import": "npx tsx src/main.cli.ts --import mocks/mock-data.tsv",
+    "cli:import": "npx tsx src/main.cli.ts --import mocks/mock-data.generated.tsv",
     "cli:generate": "npx tsx src/main.cli.ts --generate 10 mocks/mock-data.generated.tsv http://localhost:3000/api",
     "mock:server": "json-server ./mocks/mock-server-data.json --port 3000",
     "lint": "eslint src/ --ext .ts",
@@ -26,7 +26,8 @@
   "dependencies": {
     "chalk": "5.3.0",
     "dayjs": "1.11.13",
-    "got": "14.4.2"
+    "got": "14.4.2",
+    "uid": "2.0.2"
   },
   "devDependencies": {
     "@types/node": "20.12.7",

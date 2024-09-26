@@ -1,6 +1,8 @@
 import dayjs from 'dayjs';
 import { DELIMITER, FIRST_WEEK_DAY, LAST_WEEK_DAY, StringBooleanValue } from '@/constants/index.js';
 
+const FILE_NAME_REGEX = /^.*?([^\\/]*)$/;
+
 export function generateRandomNumber(min: number, max: number, fractionDigits = 0) {
   return +(Math.random() * (max - min) + min).toFixed(fractionDigits);
 }
@@ -42,6 +44,10 @@ export function parseNumbers<T = number>(value: string) {
 
 export function parseBoolean(value: string) {
   return value.toLowerCase() === StringBooleanValue.TRUE;
+}
+
+export function getFileName(value: string) {
+  return value.replace(FILE_NAME_REGEX, '$1');
 }
 
 /** @example declination(5, ['яблоко', 'яблока', 'яблок']) => "яблок" */

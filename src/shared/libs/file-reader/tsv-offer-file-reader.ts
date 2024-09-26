@@ -1,5 +1,5 @@
-import { createReadStream } from 'node:fs';
 import EventEmitter from 'node:events';
+import { createReadStream } from 'node:fs';
 import { parseBoolean, parseNumbers, parseStrings } from '@/shared/helpers/index.js';
 import {
   ENCODING,
@@ -64,31 +64,35 @@ export class TSVOfferFileReader extends EventEmitter implements FileReader {
   }
 
   public async read(): Promise<void> {
-    const readStream = createReadStream(this.filename, {
-      highWaterMark: TSV_CHUNK_SIZE,
-      encoding: ENCODING,
-    });
+    try {
+      const readStream = createReadStream(this.filename, {
+        highWaterMark: TSV_CHUNK_SIZE,
+        encoding: ENCODING,
+      });
 
-    let remainingData = '';
-    let nextLinePosition = -1;
-    let importedRowCount = 0;
-    let index = -1;
+      let remainingData = '';
+      let nextLinePosition = -1;
+      let importedRowCount = 0;
+      let index = -1;
 
-    for await (const chunk of readStream) {
-      remainingData += chunk.toString();
-      nextLinePosition = remainingData.indexOf(END_OF_LINE);
-
-      while (nextLinePosition >= 0) {
-        const line = remainingData.slice(0, nextLinePosition);
-
-        remainingData = remainingData.slice(++nextLinePosition);
+      for await (const chunk of readStream) {
+        remainingData += chunk.toString();
         nextLinePosition = remainingData.indexOf(END_OF_LINE);
-        importedRowCount++;
 
-        this.emit(LINE_END_EVENT_NAME, this.parseLineToOffer(line), ++index);
+        while (nextLinePosition >= 0) {
+          const line = remainingData.slice(0, nextLinePosition);
+
+          remainingData = remainingData.slice(++nextLinePosition);
+          nextLinePosition = remainingData.indexOf(END_OF_LINE);
+          importedRowCount++;
+
+          this.emit(LINE_END_EVENT_NAME, this.parseLineToOffer(line), ++index);
+        }
       }
-    }
 
-    this.emit(END_EVENT_NAME, importedRowCount);
+      this.emit(END_EVENT_NAME, importedRowCount);
+    } catch (error: unknown) {
+      throw new Error(`Ошибка при чтении файла **${this.filename}**`);
+    }
   }
 }

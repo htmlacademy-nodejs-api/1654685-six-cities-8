@@ -1,3 +1,4 @@
+import { uid } from 'uid';
 import {
   getRandomDate,
   getRandomItem,
@@ -25,7 +26,7 @@ export class TSVOfferGenerator implements OfferGenerator {
   constructor(private readonly mockData: MockServerData) {}
 
   public generate(): string {
-    const id = '';
+    const id = uid();
     const title = getRandomItem(this.mockData.offer.titles);
     const description = getRandomItem(this.mockData.offer.descriptions);
     const createdAt = getRandomDate().toISOString();
