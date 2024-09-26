@@ -9,6 +9,17 @@ import {
 import { coordinatesCityMap } from '@/constants/city.js';
 import { MockServerData, MockTableRawData } from '@/shared/types/index.js';
 import { OfferGenerator } from './index.js';
+import {
+  GUEST_MAX_VALUE,
+  GUEST_MIN_VALUE,
+  PRICE_MAX_VALUE,
+  PRICE_MIN_VALUE,
+  RATING_MAX_VALUE,
+  RATING_MIN_VALUE,
+  ROOM_MAX_VALUE,
+  ROOM_MIN_VALUE,
+  COMMENTS_COUNT_MAX_VALUE,
+} from '@/constants/index.js';
 
 export class TSVOfferGenerator implements OfferGenerator {
   constructor(private readonly mockData: MockServerData) {}
@@ -28,11 +39,11 @@ export class TSVOfferGenerator implements OfferGenerator {
     const authorType = getRandomItem(this.mockData.user.types);
     const isPremium = getRandomBooleanValue();
     const isFavorite = getRandomBooleanValue();
-    const rating = generateRandomNumber(1, 5, 1);
-    const roomsCount = generateRandomNumber(1, 8);
-    const guestsCount = generateRandomNumber(1, 10);
-    const price = generateRandomNumber(100, 1e5);
-    const commentsCount = generateRandomNumber(0, 500);
+    const rating = generateRandomNumber(RATING_MIN_VALUE, RATING_MAX_VALUE, 1);
+    const roomsCount = generateRandomNumber(ROOM_MIN_VALUE, ROOM_MAX_VALUE);
+    const guestsCount = generateRandomNumber(GUEST_MIN_VALUE, GUEST_MAX_VALUE);
+    const price = generateRandomNumber(PRICE_MIN_VALUE, PRICE_MAX_VALUE);
+    const commentsCount = generateRandomNumber(0, COMMENTS_COUNT_MAX_VALUE);
     const coordinates = convertArrayToString(coordinatesCityMap[city]);
 
     const result: MockTableRawData = [

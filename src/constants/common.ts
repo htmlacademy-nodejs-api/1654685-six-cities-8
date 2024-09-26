@@ -11,6 +11,20 @@ export const ENCODING = 'utf-8' as const;
 export const LINE_END_EVENT_NAME = 'line' as const;
 export const END_EVENT_NAME = 'end' as const;
 
+export const RATING_MIN_VALUE = 1;
+export const RATING_MAX_VALUE = 5;
+
+export const ROOM_MIN_VALUE = 1;
+export const ROOM_MAX_VALUE = 8;
+
+export const GUEST_MIN_VALUE = 1;
+export const GUEST_MAX_VALUE = 10;
+
+export const PRICE_MIN_VALUE = 100;
+export const PRICE_MAX_VALUE = 1e5;
+
+export const COMMENTS_COUNT_MAX_VALUE = 500;
+
 export enum StringBooleanValue {
   TRUE = 'true',
   FALSE = 'false',
