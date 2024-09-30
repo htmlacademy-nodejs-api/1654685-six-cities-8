@@ -1,6 +1,6 @@
-import { StringBooleanValue } from '@/constants/index.js';
-import { City, OfferComfort, OfferType } from '@/shared/types/offer.type.js';
-import { UserType } from '@/shared/types/user.type.js';
+import { StringBooleanValue } from '../../constants/index.js';
+import { City, OfferComfort, OfferType } from './offer.type.js';
+import { UserType } from './user.type.js';
 
 export type StrBool = 'true' | 'false';
 

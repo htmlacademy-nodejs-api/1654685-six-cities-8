@@ -1,4 +1,4 @@
-import { Command, CommandInfo, Logger } from '@/cli/index.js';
+import { Command, CommandInfo, CliLogger } from '../../cli/index.js';
 
 export class HelpCommand implements Command {
   readonly name = '--help';
@@ -19,10 +19,10 @@ export class HelpCommand implements Command {
       pattern: this.getPattern(command),
     }));
 
-    Logger.info(
+    CliLogger.info(
       'Подготовка данных для REST API сервера.\nПример: {main.js --<command> [--arguments]}'
     );
-    Logger.info('\nДоступные команды:');
+    CliLogger.info('\nДоступные команды:');
 
     const maxCommandLength = list.reduce(
       (prev, value) => (prev > value.pattern.length ? prev : value.pattern.length),
@@ -30,7 +30,7 @@ export class HelpCommand implements Command {
     );
 
     list.forEach((command) => {
-      Logger.info(
+      CliLogger.info(
         ` **${command.pattern}**${''.padEnd(
           maxCommandLength - command.pattern.length,
           ' '

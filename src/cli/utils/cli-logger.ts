@@ -1,11 +1,11 @@
 import chalk from 'chalk';
-import { ChalkColorMethod } from '@/shared/types/index.js';
+import { ChalkColorMethod } from '../../shared/types/index.js';
 
 const BRACES_REGEX = /{([a-zA-Z0-9А-Яа-я_()[\]<>\-.:/ ]+)}/gm;
 const ASTERISKS_REGEX = /\*\*([a-zA-Z0-9А-Яа-я_()[\]<>\-.:/ ]+)\*\*/gm;
 const UNDERLINE_REGEX = /__([a-zA-Z0-9А-Яа-я_()[\]<>\-.:/ ]+)__/gm;
 
-export class Logger {
+export class CliLogger {
   private static getStyledText(message: string, color: ChalkColorMethod = 'green') {
     return message
       .replaceAll(BRACES_REGEX, chalk[color]('$1'))

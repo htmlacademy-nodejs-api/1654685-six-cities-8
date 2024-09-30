@@ -1,8 +1,8 @@
 import got from 'got';
-import { getFileName } from '@/shared/helpers/index.js';
-import { TSVOfferGenerator, TSVFileWriter } from '@/shared/libs/index.js';
-import { Command, Logger } from '@/cli/index.js';
-import { MockServerData } from '@/shared/types/index.js';
+import { getFileName } from '../../shared/helpers/index.js';
+import { TSVOfferGenerator, TSVFileWriter } from '../../shared/libs/index.js';
+import { MockServerData } from '../../shared/types/index.js';
+import { Command, CliLogger } from '../../cli/index.js';
 
 export class GenerateCommand implements Command {
   readonly name = '--generate';
@@ -33,7 +33,7 @@ export class GenerateCommand implements Command {
     const count = Number.parseInt(countString, 10);
 
     if (!countString || !filepath || !url) {
-      Logger.error(`Заданы не все параметры!`);
+      CliLogger.error(`Заданы не все параметры!`);
       return;
     }
 
@@ -41,9 +41,9 @@ export class GenerateCommand implements Command {
       await this.load(url);
       await this.write(filepath, count);
 
-      Logger.success(`Файл **${getFileName(filepath)}** — создан!`);
+      CliLogger.success(`Файл **${getFileName(filepath)}** — создан!`);
     } catch (error: unknown) {
-      Logger.error(
+      CliLogger.error(
         error,
         `Не удалось создать файл с указанными параметрами (${countString}, ${filepath}, ${url})`
       );
