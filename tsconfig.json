@@ -12,6 +12,7 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
+    "strictPropertyInitialization": false,
     "importHelpers": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -20,12 +21,16 @@
     "sourceMap": true,
     "outDir": "./dist",
     "emitDecoratorMetadata": true,
+    "baseUrl": "./",
     "types": [
-      "node",
+      "node"
     ],
     "lib": [
       "ESNext"
-    ]
+    ],
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
   "include": [
     "src/**/*.ts"
