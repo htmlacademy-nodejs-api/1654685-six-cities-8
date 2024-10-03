@@ -9,7 +9,8 @@
   ],
   "main": "main.js",
   "scripts": {
-    "start": "npm run build && node ./dist/main.js",
+    "start:cli": "npm run build && node ./dist/main.cli.js",
+    "start:rest": "npm run ts ./src/main.rest.ts | pino-pretty --colorize --translateTime SYS:",
     "build": "npm run clean && npm run compile",
     "cli:help": "npx tsx src/main.cli.ts --help",
     "cli:version": "npx tsx src/main.cli.ts --version",
@@ -25,11 +26,19 @@
   },
   "dependencies": {
     "chalk": "5.3.0",
+    "convict": "6.2.4",
+    "convict-format-with-validator": "6.2.0",
     "dayjs": "1.11.13",
+    "dotenv": "16.4.5",
     "got": "14.4.2",
+    "inversify": "6.0.2",
+    "pino": "9.4.0",
+    "reflect-metadata": "0.2.2",
     "uid": "2.0.2"
   },
   "devDependencies": {
+    "@types/convict": "6.1.6",
+    "@types/convict-format-with-validator": "6.0.5",
     "@types/node": "20.12.7",
     "@typescript-eslint/eslint-plugin": "6.7.0",
     "@typescript-eslint/parser": "6.7.0",
@@ -38,6 +47,7 @@
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-prettier": "5.2.1",
     "json-server": "0.17.3",
+    "pino-pretty": "11.2.2",
     "prettier": "3.3.3",
     "rimraf": "5.0.1",
     "ts-node": "10.9.2",
@@ -45,6 +55,11 @@
     "typescript": "5.4.5"
   },
   "type": "module",
+  "ts-node/esm": {
+    "require": [
+      "tsconfig-paths/register"
+    ]
+  },
   "engines": {
     "node": "^20.0.0",
     "npm": ">=10"

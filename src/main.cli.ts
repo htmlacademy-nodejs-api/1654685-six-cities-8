@@ -6,7 +6,7 @@ import {
   VersionCommand,
   ImportCommand,
   GenerateCommand,
-} from '@/cli/index.js';
+} from './cli/index.js';
 
 new CliApplication('--help').processCommand(process.argv, [
   new VersionCommand(),

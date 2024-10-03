@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { Command, Logger } from '@/cli/index.js';
+import { Command, CliLogger } from '../../cli/index.js';
 
 export class VersionCommand implements Command {
   readonly name = '--version';
@@ -26,9 +26,9 @@ export class VersionCommand implements Command {
 
   public async execute(): Promise<void> {
     try {
-      Logger.info(`Версия: **${this.getVersion()}**`);
+      CliLogger.info(`Версия: **${this.getVersion()}**`);
     } catch (error: unknown) {
-      Logger.error(error, 'Не удалось прочитать версию пакета');
+      CliLogger.error(error, 'Не удалось прочитать версию пакета');
     }
   }
 }

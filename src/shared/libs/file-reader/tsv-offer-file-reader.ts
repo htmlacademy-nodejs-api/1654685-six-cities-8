@@ -1,6 +1,6 @@
 import EventEmitter from 'node:events';
 import { createReadStream } from 'node:fs';
-import { parseBoolean, parseNumbers, parseStrings } from '@/shared/helpers/index.js';
+import { parseBoolean, parseNumbers, parseStrings } from '../../helpers/index.js';
 import {
   ENCODING,
   TAB_CHAR,
@@ -8,9 +8,9 @@ import {
   TSV_CHUNK_SIZE,
   END_EVENT_NAME,
   LINE_END_EVENT_NAME,
-} from '@/constants/index.js';
-import { Offer, MockTableData } from '@/shared/types/index.js';
-import { FileReader } from '@/shared/libs/index.js';
+} from '../../../constants/index.js';
+import { Offer, MockTableData } from '../../types/index.js';
+import { FileReader } from '../../libs/index.js';
 
 export class TSVOfferFileReader extends EventEmitter implements FileReader {
   constructor(private readonly filename: string) {

@@ -1,6 +1,6 @@
 import { createWriteStream, WriteStream } from 'node:fs';
-import { ENCODING, END_OF_LINE } from '@/constants/index.js';
-import { FileWriter } from '@/shared/libs/index.js';
+import { ENCODING, END_OF_LINE } from '../../../constants/index.js';
+import { FileWriter } from '../../../shared/libs/index.js';
 
 export class TSVFileWriter implements FileWriter {
   private stream!: WriteStream;

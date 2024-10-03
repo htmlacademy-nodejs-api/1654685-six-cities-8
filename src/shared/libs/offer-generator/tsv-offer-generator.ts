@@ -6,21 +6,21 @@ import {
   convertArrayToString,
   generateRandomNumber,
   getRandomBooleanValue,
-} from '@/shared/helpers/index.js';
-import { coordinatesCityMap } from '@/constants/city.js';
-import { MockServerData, MockTableRawData } from '@/shared/types/index.js';
+} from '../../helpers/index.js';
+import { MockServerData, MockTableRawData } from '../../types/index.js';
 import { OfferGenerator } from './index.js';
 import {
-  GUEST_MAX_VALUE,
-  GUEST_MIN_VALUE,
-  PRICE_MAX_VALUE,
-  PRICE_MIN_VALUE,
-  RATING_MAX_VALUE,
-  RATING_MIN_VALUE,
-  ROOM_MAX_VALUE,
   ROOM_MIN_VALUE,
+  ROOM_MAX_VALUE,
+  GUEST_MIN_VALUE,
+  GUEST_MAX_VALUE,
+  PRICE_MIN_VALUE,
+  PRICE_MAX_VALUE,
+  RATING_MIN_VALUE,
+  RATING_MAX_VALUE,
+  coordinatesCityMap,
   COMMENTS_COUNT_MAX_VALUE,
-} from '@/constants/index.js';
+} from '../../../constants/index.js';
 
 export class TSVOfferGenerator implements OfferGenerator {
   constructor(private readonly mockData: MockServerData) {}

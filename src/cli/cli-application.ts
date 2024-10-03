@@ -1,5 +1,5 @@
-import { parseArgv } from '@/cli/utils/parser.js';
-import { Command, Logger } from './index.js';
+import { parseArgv } from './utils/parser.js';
+import { Command, CliLogger } from './index.js';
 
 export type CommandInfo = { name: string; description: string; params?: string[] };
 
@@ -47,7 +47,7 @@ export class CliApplication {
       const command = this.commandMap[name] || this.commandMap[this.commandAliasMap[name]];
 
       if (!command) {
-        Logger.warning(
+        CliLogger.warning(
           `⚠️ Команда не найдена! ${this.defaultCommand ? `Запущена команда {${this.defaultCommand}}:\n` : ''}`
         );
       }
