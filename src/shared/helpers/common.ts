@@ -15,7 +15,7 @@ export function getRandomItem<T>(array: T[]): T {
 }
 
 export function getRandomBooleanValue() {
-  return getRandomItem([StringBooleanValue.TRUE, StringBooleanValue.FALSE]);
+  return getRandomItem([StringBooleanValue.True, StringBooleanValue.False]);
 }
 
 export function getRandomDate() {
@@ -46,7 +46,7 @@ export function parseNumbers<T = number>(value: string) {
 }
 
 export function parseBoolean(value: string) {
-  return value.toLowerCase() === StringBooleanValue.TRUE;
+  return value.toLowerCase() === StringBooleanValue.True;
 }
 
 /** @example declination(5, ['яблоко', 'яблока', 'яблок']) => "яблок" */

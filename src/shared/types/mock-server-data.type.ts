@@ -2,7 +2,7 @@ import { StringBooleanValue } from '../../constants/index.js';
 import { City, OfferComfort, OfferType } from './offer.type.js';
 import { UserType } from './user.type.js';
 
-export type StrBool = 'true' | 'false';
+export type StringBool = 'true' | 'false';
 
 export type MockServerData = {
   offer: {

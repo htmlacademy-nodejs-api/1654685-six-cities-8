@@ -1,29 +1,29 @@
 import { User } from './user.type.js';
 
 export enum City {
-  PARIS = 'Paris',
-  COLOGNE = 'Cologne',
-  BRUSSELS = 'Brussels',
-  AMSTERDAM = 'Amsterdam',
-  HAMBURG = 'Hamburg',
-  DUSSELDORF = 'Dusseldorf',
+  Paris = 'Paris',
+  Cologne = 'Cologne',
+  Brussels = 'Brussels',
+  Amsterdam = 'Amsterdam',
+  Hamburg = 'Hamburg',
+  Dusseldorf = 'Dusseldorf',
 }
 
 export enum OfferType {
-  APARTMENT = 'apartment',
-  HOUSE = 'house',
-  ROOM = 'room',
-  HOTEL = 'hotel',
+  Apartment = 'apartment',
+  House = 'house',
+  Room = 'room',
+  Hotel = 'hotel',
 }
 
 export enum OfferComfort {
-  BREAKFAST = 'Breakfast',
-  AIR_CONDITIONER = 'Air conditioning',
-  WORKSPACE = 'Laptop friendly workspace',
-  BABY_SEAT = 'Baby seat',
-  WASHER = 'Washer',
-  TOWELS = 'Towels',
-  FRIDGE = 'Fridge',
+  Breakfast = 'Breakfast',
+  AirConditioner = 'Air conditioning',
+  Workspace = 'Laptop friendly workspace',
+  BabySeat = 'Baby seat',
+  Washer = 'Washer',
+  Towels = 'Towels',
+  Fridge = 'Fridge',
 }
 
 /** Предложение по аренде
