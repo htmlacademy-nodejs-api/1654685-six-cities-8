@@ -2,7 +2,7 @@ import path from 'node:path';
 import chalk from 'chalk';
 import { existsSync } from 'node:fs';
 import { declination, getFileName } from '../../shared/helpers/index.js';
-import { END_EVENT_NAME, LINE_END_EVENT_NAME } from '../../constants/index.js';
+import { EventName } from '../../constants/index.js';
 import { TSVOfferFileReader } from '../../shared/libs/index.js';
 import { Command, CliLogger } from '../../cli/index.js';
 import { Offer } from '../../shared/types/index.js';
@@ -33,8 +33,8 @@ export class ImportCommand implements Command {
 
     const fileReader = new TSVOfferFileReader(fullPath);
 
-    fileReader.on(LINE_END_EVENT_NAME, this.onReadLine);
-    fileReader.on(END_EVENT_NAME, this.onReadFile);
+    fileReader.on(EventName.LINE_READ, this.onReadLine);
+    fileReader.on(EventName.FILE_READ, this.onReadFile);
 
     fileReader.read();
   }

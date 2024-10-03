@@ -2,12 +2,11 @@ import EventEmitter from 'node:events';
 import { createReadStream } from 'node:fs';
 import { parseBoolean, parseNumbers, parseStrings } from '../../helpers/index.js';
 import {
+  EventName,
   ENCODING,
   TAB_CHAR,
   END_OF_LINE,
   TSV_CHUNK_SIZE,
-  END_EVENT_NAME,
-  LINE_END_EVENT_NAME,
 } from '../../../constants/index.js';
 import { Offer, MockTableData } from '../../types/index.js';
 import { FileReader } from '../../libs/index.js';
@@ -86,11 +85,11 @@ export class TSVOfferFileReader extends EventEmitter implements FileReader {
           nextLinePosition = remainingData.indexOf(END_OF_LINE);
           importedRowCount++;
 
-          this.emit(LINE_END_EVENT_NAME, this.parseLineToOffer(line), ++index);
+          this.emit(EventName.LINE_READ, this.parseLineToOffer(line), ++index);
         }
       }
 
-      this.emit(END_EVENT_NAME, importedRowCount);
+      this.emit(EventName.FILE_READ, importedRowCount);
     } catch (error: unknown) {
       throw new Error(`Ошибка при чтении файла **${this.filename}**`);
     }
