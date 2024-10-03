@@ -1,5 +1,3 @@
-import { Entity } from '@/shared/types/index.js';
-
 export enum UserType {
   /** Обычный */
   REGULAR = 'regular',
@@ -10,13 +8,10 @@ export enum UserType {
 
 /** Пользователь
  * @desc Описание [Сущности]{@link https://up.htmlacademy.ru/nodejs-api/8/project/six-cities#user-entity} */
-export interface User extends Entity {
+export interface User {
   /** Имя
    * @desc Мин. 1 символ, макс. - 15 */
   name: string;
-
-  firstname: string;
-  lastname: string;
 
   /** Электронная почта
    * @unique
@@ -29,7 +24,7 @@ export interface User extends Entity {
 
   /** Пароль
    * @desc Мин. 6 символов, макс. - 12 */
-  password: string;
+  password?: string;
 
   /** Тип пользователя */
   type: UserType;

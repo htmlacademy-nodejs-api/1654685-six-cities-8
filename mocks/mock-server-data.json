@@ -1,0 +1,86 @@
+{
+  "api": {
+    "offer": {
+      "titles": [
+        "Motif Seattle",
+        "The Weston Seattle",
+        "The Maxwell Hotel",
+        "The EdgeWater",
+        "Provenance Hotel",
+        "Kimono Hotel",
+        "Hotel Deca"
+      ],
+      "cities": [
+        "Amsterdam",
+        "Brussels",
+        "Cologne",
+        "Dusseldorf",
+        "Hamburg",
+        "Paris"
+      ],
+      "descriptions": [
+        "The hotel is located in the city center",
+        "The hotel is just a few minutes from the city center",
+        "Metro 5 minutes from the hotel",
+        "There is a park nearby",
+        "On the seashore"
+      ],
+      "types": [
+        "apartment",
+        "house",
+        "room",
+        "hotel"
+      ],
+      "comforts": [
+        "Breakfast",
+        "Air conditioning",
+        "Laptop friendly workspace",
+        "Baby seat",
+        "Washer",
+        "Towels",
+        "Fridge"
+      ],
+      "photos": [
+        "hall.jpg",
+        "balcony.jpg",
+        "bedroom.jpg",
+        "hallway.jpg",
+        "panorama.jpg",
+        "reception.jpg",
+        "table.jpg"
+      ]
+    },
+    "user": {
+      "types": ["Regular", "Pro"],
+      "names": [
+        "Lauren Moon",
+        "Marcos Palmer",
+        "Mark Drake",
+        "Rickey Horn",
+        "Rita Frazier"
+      ],
+      "emails": [
+        "boss@mail.local",
+        "dino@mail.local",
+        "bat@mail.local",
+        "sky@mail.local",
+        "box@mail.local"
+      ],
+      "avatars": [
+        "red.jpg",
+        "cat.jpg",
+        "fox.jpg",
+        "rex.jpg",
+        "smile.jpg",
+        "coffee.jpg"
+      ]
+    },
+    "comments": [
+      "Delightful 👌",
+      "Unbelievable 😊",
+      "Excellent service!",
+      "Great place, thank you ❤️",
+      "Clean, beautiful, delicious 👍"
+    ]
+  }
+}

@@ -1,4 +1,4 @@
-import { Entity } from '@/shared/types/index.js';
+import { User } from '@/shared/types/index.js';
 
 export enum City {
   PARIS = 'Paris',
@@ -9,14 +9,14 @@ export enum City {
   DUSSELDORF = 'Dusseldorf',
 }
 
-export enum RentalType {
+export enum OfferType {
   APARTMENT = 'apartment',
   HOUSE = 'house',
   ROOM = 'room',
   HOTEL = 'hotel',
 }
 
-export enum RentalComfort {
+export enum OfferComfort {
   BREAKFAST = 'Breakfast',
   AIR_CONDITIONER = 'Air conditioning',
   WORKSPACE = 'Laptop friendly workspace',
@@ -28,7 +28,9 @@ export enum RentalComfort {
 
 /** Предложение по аренде
  * @desc Описание [Сущности]{@link https://up.htmlacademy.ru/nodejs-api/8/project/six-cities#offer-entity} */
-export interface Offer extends Entity {
+export interface Offer {
+  id: string;
+
   /** Наименование
    * @desc Мин. 10 символов, макс. - 100 */
   title: string;
@@ -38,7 +40,10 @@ export interface Offer extends Entity {
   description: string;
 
   /** Дата публикации предложения */
-  publishedAt: string;
+  createdAt: string;
+
+  /** Дата изменения */
+  updatedAt?: string;
 
   /** Город. */
   city: City;
@@ -64,7 +69,7 @@ export interface Offer extends Entity {
   rating?: number;
 
   /** Тип жилья */
-  type: RentalType;
+  type: OfferType;
 
   /** Количество комнат
    * @desc Мин. 1, Макс. 8 */
@@ -79,10 +84,10 @@ export interface Offer extends Entity {
   price: number;
 
   /** Список удобств */
-  comforts: RentalComfort[] | RentalComfort;
+  comforts: OfferComfort[] | OfferComfort;
 
   /** Автор предложения */
-  authorId: string;
+  author: User;
 
   /** Количество комментариев
    * @desc Рассчитывается автоматически */
@@ -90,5 +95,5 @@ export interface Offer extends Entity {
 
   /** Координаты предложения для аренды
    * @desc Координаты представлены широтой и долготой */
-  coordinates: [number, number];
+  coordinates: number[];
 }
