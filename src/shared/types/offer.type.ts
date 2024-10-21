@@ -84,7 +84,7 @@ export interface Offer {
   price: number;
 
   /** Список удобств */
-  comforts: OfferComfort[] | OfferComfort;
+  comforts: OfferComfort[];
 
   /** Автор предложения */
   author: User;
