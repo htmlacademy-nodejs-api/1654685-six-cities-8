@@ -2,6 +2,7 @@ import { City, OfferComfort, OfferType } from '../../../types/index.js';
 
 export class CreateOfferDto {
   createdAt: string;
+  updatedAt?: string;
   title: string;
   description: string;
   city: City;
