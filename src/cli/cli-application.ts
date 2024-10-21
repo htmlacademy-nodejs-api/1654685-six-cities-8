@@ -1,5 +1,6 @@
 import { parseArgv } from './utils/parser.js';
-import { Command, CliLogger } from './index.js';
+import { ConsoleLogger, Logger } from '../shared/libs/logger/index.js';
+import { Command } from './index.js';
 
 export type CommandInfo = { name: string; description: string; params?: string[] };
 
@@ -8,8 +9,10 @@ export class CliApplication {
   private commandAliasMap: Record<string, string> = {};
 
   private readonly defaultCommand: string = '';
+  private readonly logger: Logger;
 
   constructor(defaultCommand: string) {
+    this.logger = new ConsoleLogger();
     this.defaultCommand = defaultCommand;
   }
 
@@ -47,7 +50,7 @@ export class CliApplication {
       const command = this.commandMap[name] || this.commandMap[this.commandAliasMap[name]];
 
       if (!command) {
-        CliLogger.warning(
+        this.logger.warn(
           `⚠️ Команда не найдена! ${this.defaultCommand ? `Запущена команда {${this.defaultCommand}}:\n` : ''}`
         );
       }

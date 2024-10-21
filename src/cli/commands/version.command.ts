@@ -1,10 +1,17 @@
 import { readFileSync } from 'node:fs';
-import { Command, CliLogger } from '../../cli/index.js';
+import { ConsoleLogger, Logger } from '../../shared/libs/logger/index.js';
+import { Command } from '../../cli/index.js';
 
 export class VersionCommand implements Command {
   readonly name = '--version';
   readonly alias = '-v';
   readonly description = 'Выводит номер версии';
+
+  private readonly logger: Logger;
+
+  constructor() {
+    this.logger = new ConsoleLogger();
+  }
 
   private getVersion(): string {
     if (process.env?.npm_package_version) {
@@ -26,9 +33,9 @@ export class VersionCommand implements Command {
 
   public async execute(): Promise<void> {
     try {
-      CliLogger.info(`Версия: **${this.getVersion()}**`);
+      this.logger.info(`Версия: **${this.getVersion()}**`);
     } catch (error: unknown) {
-      CliLogger.error(error, 'Не удалось прочитать версию пакета');
+      this.logger.error(error, 'Не удалось прочитать версию пакета');
     }
   }
 }

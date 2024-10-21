@@ -1,9 +1,9 @@
 export enum UserType {
   /** Обычный */
-  REGULAR = 'regular',
+  Regular = 'regular',
 
   /** Продвинутый */
-  PRO = 'pro',
+  Pro = 'Pro',
 }
 
 /** Пользователь
@@ -21,10 +21,6 @@ export interface User {
   /** Аватар пользователя
    * @desc Изображение пользователя в формате .jpg или .png */
   avatarPath?: string;
-
-  /** Пароль
-   * @desc Мин. 6 символов, макс. - 12 */
-  password?: string;
 
   /** Тип пользователя */
   type: UserType;

@@ -15,6 +15,7 @@ extends:
   - "htmlacademy/node"
   - "plugin:prettier/recommended"
 rules:
+  '@typescript-eslint/no-unsafe-declaration-merging': off
   prettier/prettier:
     - "error"
     - semi: true
