@@ -11,7 +11,7 @@ const RETRY_TIMEOUT = 1000;
 @injectable()
 export class MongoDatabaseClient implements DatabaseClient {
   private mongoose: typeof Mongoose;
-  private isConnectedToDatabase: boolean = false;
+  private isConnectedToDatabase = false;
 
   constructor(@inject(Component.Logger) private readonly logger: Logger) {}
 
@@ -21,7 +21,8 @@ export class MongoDatabaseClient implements DatabaseClient {
 
   public async connect(uri: string): Promise<void> {
     if (this.isConnectedToDatabase) {
-      throw new Error('MongoDB клиент подключен');
+      this.logger.warn('MongoDB клиент подключен');
+      return;
     }
 
     this.logger.info('Подключение к MongoDB…');
@@ -45,10 +46,11 @@ export class MongoDatabaseClient implements DatabaseClient {
 
   public async disconnect(): Promise<void> {
     if (!this.isConnectedToDatabase) {
-      throw new Error('Не подключен к базе данных');
+      this.logger.warn('MongoDB клиент не подключен');
+      return;
     }
 
-    await this.mongoose.disconnect?.();
+    await this.mongoose.disconnect();
     this.isConnectedToDatabase = false;
     this.logger.info('Соединение с базой данных закрыто');
   }

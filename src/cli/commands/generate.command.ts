@@ -11,12 +11,8 @@ export class GenerateCommand implements Command {
   readonly description = 'Генерирует произвольное количество тестовых данных';
   readonly params = ['n', 'filepath', 'url'];
 
-  private readonly logger: Logger;
-  private initialData!: MockServerData;
-
-  constructor() {
-    this.logger = new ConsoleLogger();
-  }
+  private readonly logger: Logger = new ConsoleLogger();
+  private initialData: MockServerData;
 
   private async load(url: string) {
     try {

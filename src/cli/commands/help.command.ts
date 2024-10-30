@@ -6,11 +6,7 @@ export class HelpCommand implements Command {
   readonly alias = '-h';
   readonly description = 'Выводит справочную информацию';
 
-  private readonly logger: Logger;
-
-  constructor() {
-    this.logger = new ConsoleLogger();
-  }
+  private readonly logger: Logger = new ConsoleLogger();
 
   /** Получить пример вызова
    * @example --command <param_1> <param_2> */

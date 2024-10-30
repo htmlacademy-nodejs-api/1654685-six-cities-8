@@ -9,10 +9,9 @@ export class CliApplication {
   private commandAliasMap: Record<string, string> = {};
 
   private readonly defaultCommand: string = '';
-  private readonly logger: Logger;
+  private readonly logger: Logger = new ConsoleLogger();
 
   constructor(defaultCommand: string) {
-    this.logger = new ConsoleLogger();
     this.defaultCommand = defaultCommand;
   }
 
