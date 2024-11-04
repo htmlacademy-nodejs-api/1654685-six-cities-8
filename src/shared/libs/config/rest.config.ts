@@ -27,4 +27,8 @@ export class RestConfig implements Config<RestSchema> {
   public get<T extends keyof RestSchema>(key: T): RestSchema[T] {
     return this.config[key];
   }
+
+  public get mongoUri() {
+    return `mongodb://${this.get('DB_USER')}:${this.get('DB_PASS')}@${this.get('DB_HOST')}:${this.get('DB_PORT')}/${this.get('DB_NAME')}?authSource=admin`;
+  }
 }

@@ -11,9 +11,9 @@ import { TSVOfferFileReader } from '../../shared/libs/index.js';
 import { EventName } from '../../constants/index.js';
 import { Offer } from '../../shared/types/index.js';
 import { Command } from '../../cli/index.js';
-import { DEFAULT_USER_PASS } from './command.constant.js';
 
 const LINE_WORDS = ['строка', 'строки', 'строк'];
+const DEFAULT_USER_PASS = '123456';
 
 export class ImportCommand implements Command {
   readonly name = '--import';
@@ -21,18 +21,11 @@ export class ImportCommand implements Command {
   readonly description = 'Импортирует данные из TSV файла';
   readonly params = ['path', 'mongoUri', 'salt'];
 
-  private readonly logger: Logger;
-  private databaseClient: DatabaseClient;
-  private offerService: OfferService;
-  private userService: UserService;
+  private readonly logger: Logger = new ConsoleLogger();
+  private offerService: OfferService = new DefaultOfferService(this.logger, OfferModel);
+  private userService: UserService = new DefaultUserService(this.logger, UserModel);
+  private databaseClient: DatabaseClient = new MongoDatabaseClient(this.logger);
   private salt: string;
-
-  constructor() {
-    this.logger = new ConsoleLogger();
-    this.offerService = new DefaultOfferService(this.logger, OfferModel);
-    this.userService = new DefaultUserService(this.logger, UserModel);
-    this.databaseClient = new MongoDatabaseClient(this.logger);
-  }
 
   private async onReadLine(offer: Offer, index: number, resolve: () => void) {
     this.logger.info(`\nИмпортирована ${chalk.bold.magenta(`${index}-ая`)} строка:`, offer);

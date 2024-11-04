@@ -7,11 +7,7 @@ export class VersionCommand implements Command {
   readonly alias = '-v';
   readonly description = 'Выводит номер версии';
 
-  private readonly logger: Logger;
-
-  constructor() {
-    this.logger = new ConsoleLogger();
-  }
+  private readonly logger: Logger = new ConsoleLogger();
 
   private getVersion(): string {
     if (process.env?.npm_package_version) {
