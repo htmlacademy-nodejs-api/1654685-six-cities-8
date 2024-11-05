@@ -1,11 +1,9 @@
 import { City, OfferComfort, OfferType } from '../../../types/index.js';
 
 export class CreateOfferDto {
-  createdAt: string;
-  updatedAt?: string;
+  city: City;
   title: string;
   description: string;
-  city: City;
   preview: string;
   photos: string[];
   isPremium?: boolean;
@@ -17,4 +15,6 @@ export class CreateOfferDto {
   comforts: OfferComfort[];
   userId: string;
   coordinates: number[];
+  createdAt: string;
+  updatedAt?: string;
 }
