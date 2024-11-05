@@ -10,7 +10,7 @@
   "main": "main.js",
   "scripts": {
     "start:cli": "npm run build && node ./dist/main.cli.js",
-    "start:rest": "npm run ts ./src/main.rest.ts | pino-pretty --colorize --translateTime SYS:",
+    "start:rest": "nodemon -L",
     "build": "npm run clean && npm run compile",
     "cli:help": "npx tsx src/main.cli.ts --help",
     "cli:version": "npx tsx src/main.cli.ts --version",
