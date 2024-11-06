@@ -5,6 +5,7 @@ import {
   FIRST_WEEK_DAY,
   StringBooleanValue,
 } from '../../constants/index.js';
+import { ClassConstructor, plainToInstance } from "class-transformer";
 
 export function generateRandomNumber(min: number, max: number, fractionDigits = 0) {
   return +(Math.random() * (max - min) + min).toFixed(fractionDigits);
@@ -57,4 +58,8 @@ export function declination(count: number, words: string[]) {
 
   const CASES = [2, 0, 1, 1, 1, 2] as const;
   return words[count % 100 > 4 && count % 100 < 20 ? 2 : CASES[count % 10 < 5 ? count % 10 : 5]];
+}
+
+export function fillDTO<T, V>(someDto: ClassConstructor<T>, plainObject: V) {
+  return plainToInstance(someDto, plainObject, { excludeExtraneousValues: true });
 }

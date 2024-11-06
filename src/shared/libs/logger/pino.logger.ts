@@ -3,6 +3,7 @@ import { injectable } from 'inversify';
 import { resolve } from 'node:path';
 
 import { getCurrentModuleDirectoryPath } from '../../helpers/index.js';
+import { DEFAULT_ERROR } from './logger.constant.js';
 import { Logger } from './logger.interface.js';
 
 const ROOT_DIR = '../../../';
@@ -24,7 +25,7 @@ export class PinoLogger implements Logger {
     });
 
     this.logger = pino({}, multiTransport);
-    this.logger.info('Logger created... 👌');
+    this.logger.info('PinoLogger инициирован... 👌');
   }
 
   public debug(message: string, ...args: unknown[]): void {
@@ -43,7 +44,7 @@ export class PinoLogger implements Logger {
     this.logger.warn(message, ...args);
   }
 
-  public error(error: unknown, message: string, ...args: unknown[]): void {
-    this.logger.error(error, message, ...args);
+  public error(error: unknown, ...args: unknown[]): void {
+    this.logger.error(error instanceof Error ? error.message : error, DEFAULT_ERROR, ...args);
   }
 }
