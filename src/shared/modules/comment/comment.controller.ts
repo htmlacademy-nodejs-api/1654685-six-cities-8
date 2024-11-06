@@ -23,7 +23,7 @@ export class CommentController extends BaseController {
     this.addRoute({ path: '/id/:id', method: HttpMethod.get, handler: this.findById });
   }
 
-  public async findById({ params }: Request, res: Response) {
+  public async findById({ params }: Request, response: Response) {
     const offer = await this.commentService.findByOfferId(params.id);
 
     if (!offer) {
@@ -34,6 +34,6 @@ export class CommentController extends BaseController {
       );
     }
 
-    this.ok(res, fillDTO(CommentRdo, offer));
+    this.ok(response, fillDTO(CommentRdo, offer));
   }
 }

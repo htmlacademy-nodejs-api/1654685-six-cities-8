@@ -23,7 +23,7 @@ export class CategoryController extends BaseController {
     this.addRoute({ path: '/id/:id', method: HttpMethod.get, handler: this.findById });
   }
 
-  public async findById({ params }: Request, res: Response) {
+  public async findById({ params }: Request, response: Response) {
     const offer = await this.categoryService.findByCategoryId(params.id);
 
     if (!offer) {
@@ -34,6 +34,6 @@ export class CategoryController extends BaseController {
       );
     }
 
-    this.ok(res, fillDTO(CategoryRdo, offer));
+    this.ok(response, fillDTO(CategoryRdo, offer));
   }
 }

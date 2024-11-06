@@ -11,10 +11,10 @@ export class UploadFileMiddleware implements Middleware {
     private fieldName: string
   ) {}
 
-  public async execute(req: Request, res: Response, next: NextFunction): Promise<void> {
+  public async execute(request: Request, response: Response, next: NextFunction): Promise<void> {
     const storage = diskStorage({
       destination: this.uploadDirectory,
-      filename: (_req, file, callback) => {
+      filename: (_request, file, callback) => {
         const fileExtension = extension(file.mimetype);
         const filename = randomUUID();
         callback(null, `${filename}.${fileExtension}`);
@@ -23,6 +23,6 @@ export class UploadFileMiddleware implements Middleware {
 
     const uploadSingleFileMiddleware = multer({ storage }).single(this.fieldName);
 
-    uploadSingleFileMiddleware(req, res, next);
+    uploadSingleFileMiddleware(request, response, next);
   }
 }

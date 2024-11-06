@@ -38,19 +38,19 @@ export abstract class BaseController implements Controller {
     this.logger.info(`Маршрут зарегистрирован: ${route.method.toUpperCase()} ${route.path}`);
   }
 
-  public send<T>(res: Response, statusCode: number, data: T) {
-    res.type(this.DEFAULT_CONTENT_TYPE).status(statusCode).json(data);
+  public send<T>(response: Response, statusCode: number, data: T) {
+    response.type(this.DEFAULT_CONTENT_TYPE).status(statusCode).json(data);
   }
 
-  public created<T>(res: Response, data: T): void {
-    this.send(res, StatusCodes.CREATED, data);
+  public created<T>(response: Response, data: T): void {
+    this.send(response, StatusCodes.CREATED, data);
   }
 
-  public noContent<T>(res: Response, data: T): void {
-    this.send(res, StatusCodes.NO_CONTENT, data);
+  public noContent<T>(response: Response, data: T): void {
+    this.send(response, StatusCodes.NO_CONTENT, data);
   }
 
-  public ok<T>(res: Response, data: T): void {
-    this.send(res, StatusCodes.OK, data);
+  public ok<T>(response: Response, data: T): void {
+    this.send(response, StatusCodes.OK, data);
   }
 }

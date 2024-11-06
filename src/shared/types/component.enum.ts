@@ -20,5 +20,8 @@ export const Component = {
   CategoryService: Symbol.for('CategoryService'),
   CategoryController: Symbol.for('CategoryController'),
 
+  AuthService: Symbol.for('AuthService'),
+  AuthExceptionFilter: Symbol.for('AuthExceptionFilter'),
+
   ExceptionFilter: Symbol.for('ExceptionFilter'),
 } as const;
