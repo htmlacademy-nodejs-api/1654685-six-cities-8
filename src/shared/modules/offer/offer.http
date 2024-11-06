@@ -17,7 +17,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Imtla3NAa2Vrcy5uZXQiLCJuY
   "guestsCount": 2,
   "price": 1000,
   "comforts": ["Breakfast", "Fridge"],
-  "coordinates": [45.5,50.3]
+  "coordinates": [45.5, 50.3]
 }
 
 ###

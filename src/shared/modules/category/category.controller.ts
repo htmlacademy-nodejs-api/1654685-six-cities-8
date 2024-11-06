@@ -2,9 +2,9 @@ import { inject, injectable } from 'inversify';
 import { Request, Response } from 'express';
 import { fillDTO } from '../../helpers/common.js';
 
-import { BaseController, HttpError, HttpMethod } from '../../libs/rest/index.js';
+import { BaseController, HttpError, HttpMethod } from '../../libs/index.js';
 import { CategoryService } from './category-service.interface.js';
-import { Logger } from '../../libs/logger/index.js';
+import { Logger } from '../../libs/index.js';
 import { StatusCodes } from 'http-status-codes';
 import { Component } from '../../types/index.js';
 import { CategoryRdo } from './rdo/category.rdo.js';

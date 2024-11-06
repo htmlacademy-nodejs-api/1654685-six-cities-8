@@ -1,14 +1,17 @@
+import { SignJWT } from 'jose';
 import { inject, injectable } from 'inversify';
 import { createSecretKey } from 'node:crypto';
+
 import { AuthService } from './auth-service.interface.js';
-import { Component } from '../../types/index.js';
-import { Logger } from '../../libs/logger/index.js';
 import { LoginUserDto, UserEntity, UserService } from '../user/index.js';
-import { Config, RestSchema } from '../../libs/config/index.js';
-import { TokenPayload } from './types/token-payload.js';
-import { SignJWT } from 'jose';
-import { JWT_ALGORITHM, JWT_EXPIRED } from './auth.constant.js';
 import { AuthIncorrectException } from './errors/index.js';
+import { Config, RestSchema } from '../../libs/index.js';
+import { Component } from '../../types/index.js';
+import { TokenPayload } from './types/index.js';
+import { Logger } from '../../libs/index.js';
+
+export const JWT_ALGORITHM = 'HS256';
+export const JWT_EXPIRED = '2d';
 
 @injectable()
 export class DefaultAuthService implements AuthService {

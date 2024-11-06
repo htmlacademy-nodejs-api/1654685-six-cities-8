@@ -1,7 +1,7 @@
 import { IsEmail, IsOptional, IsString, Length } from 'class-validator';
+import { Expose } from 'class-transformer';
 import { UserType } from '../../../types/index.js';
 import { CreateUserMessages } from './create-user.messages.js';
-import { Expose } from 'class-transformer';
 
 export class CreateUserDto {
   @IsEmail({}, { message: CreateUserMessages.email.invalidFormat })

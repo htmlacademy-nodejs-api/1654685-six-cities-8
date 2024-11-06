@@ -1,15 +1,16 @@
+import { Types } from 'mongoose';
+import { types } from '@typegoose/typegoose';
 import { inject, injectable } from 'inversify';
+
+import { generalOfferAggregation, getIsFavoriteAggregation } from './offer.helpers.js';
 import { OfferService } from './offer-service.interface.js';
 import { Component, SortType } from '../../types/index.js';
-import { Logger } from '../../libs/index.js';
-import { types } from '@typegoose/typegoose';
-import { OfferEntity } from './offer.entity.js';
 import { CreateOfferDto } from './dto/create-offer.dto.js';
 import { UpdateOfferDto } from './dto/update-offer.dto.js';
-import { City } from '../../types/index.js';
-import { Types } from 'mongoose';
 import { UserEntity, UserService } from '../user/index.js';
-import { generalOfferAggregation, getIsFavoriteAggregation } from './offer.helpers.js';
+import { OfferEntity } from './offer.entity.js';
+import { Logger } from '../../libs/index.js';
+import { City } from '../../types/index.js';
 
 const DEFAULT_OFFER_COUNT = 60;
 const DEFAULT_PREMIUM_OFFER_COUNT = 3;

@@ -3,9 +3,7 @@ import { Category } from '../../types/index.js';
 
 export interface CategoryEntity extends defaultClasses.Base {}
 
-@modelOptions({
-  schemaOptions: { collection: 'categories', timestamps: true },
-})
+@modelOptions({ schemaOptions: { collection: 'categories', timestamps: true } })
 export class CategoryEntity extends defaultClasses.TimeStamps implements Category {
   @prop({ required: true, trim: true })
   public name!: string;

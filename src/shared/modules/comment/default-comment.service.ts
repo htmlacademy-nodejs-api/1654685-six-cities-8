@@ -4,7 +4,8 @@ import { Component, SortType } from '../../types/index.js';
 import { types } from '@typegoose/typegoose';
 import { CommentEntity } from './comment.entity.js';
 import { CreateCommentDto } from './dto/create-comment.dto.js';
-import { DEFAULT_COMMENT_COUNT } from './comment.constant.js';
+
+const DEFAULT_COMMENT_COUNT = 50;
 
 @injectable()
 export class DefaultCommentService implements CommentService {

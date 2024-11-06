@@ -2,10 +2,10 @@ import { inject, injectable } from 'inversify';
 import { DocumentType, types } from '@typegoose/typegoose';
 
 import { CategoryService } from './category-service.interface.js';
+import { CreateCategoryDto } from './dto/create-category.dto.js';
+import { CategoryEntity } from './category.entity.js';
 import { Component } from '../../types/index.js';
 import { Logger } from '../../libs/index.js';
-import { CategoryEntity } from './category.entity.js';
-import { CreateCategoryDto } from './dto/create-category.dto.js';
 
 @injectable()
 export class DefaultCategoryService implements CategoryService {

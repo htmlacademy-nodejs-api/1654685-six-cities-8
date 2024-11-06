@@ -7,9 +7,9 @@ import {
   PrivateRouteMiddleware,
   ValidateDtoMiddleware,
   ValidateObjectIdMiddleware,
-} from '../../libs/rest/index.js';
+} from '../../libs/index.js';
 import { Component } from '../../types/index.js';
-import { Logger } from '../../libs/logger/index.js';
+import { Logger } from '../../libs/index.js';
 import { CommentService } from './comment-service.interface.js';
 import { OfferService } from '../offer/offer-service.interface.js';
 import { ParamOfferId } from './type/param-offerid.type.js';

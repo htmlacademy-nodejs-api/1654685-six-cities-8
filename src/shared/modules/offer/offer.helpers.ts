@@ -13,12 +13,8 @@ export function getIsFavoriteAggregation(userId?: string) {
         as: 'currentUserLookup',
       },
     },
-    {
-      $addFields: { currentUser: { $arrayElemAt: ['$currentUserLookup', 0] } },
-    },
-    {
-      $addFields: { isFavorite: { $in: ['$_id', '$currentUser.favorites'] } },
-    },
+    { $addFields: { currentUser: { $arrayElemAt: ['$currentUserLookup', 0] } } },
+    { $addFields: { isFavorite: { $in: ['$_id', '$currentUser.favorites'] } } },
     { $unset: 'currentUserLookup' },
     { $unset: 'currentUser' },
   ];

@@ -1,5 +1,6 @@
 import { inject, injectable } from 'inversify';
 import { Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
 import {
   BaseController,
   HttpError,
@@ -8,19 +9,19 @@ import {
   ValidateDtoMiddleware,
   ValidateObjectIdMiddleware,
 } from '../../libs/index.js';
+import { fillDTO } from '../../helpers/common.js';
 import { Component } from '../../types/index.js';
-import { Logger } from '../../libs/index.js';
+
+import { LoginUserRequest } from './type/login-user-request.type.js';
 import { UserService } from './user-service.interface.js';
 import { Config, RestSchema } from '../../libs/index.js';
-import { StatusCodes } from 'http-status-codes';
-import { fillDTO } from '../../helpers/common.js';
-import { UserRdo } from './rdo/user.rdo.js';
-import { LoginUserRequest } from './type/login-user-request.type.js';
 import { CreateUserDto } from './dto/create-user.dto.js';
-import { LoginUserDto } from './dto/login-user.dto.js';
-import { AuthService } from '../auth/index.js';
 import { LoggedUserRdo } from './rdo/logged-user.rdo.js';
+import { LoginUserDto } from './dto/login-user.dto.js';
 import { UserType } from '../../types/index.js';
+import { AuthService } from '../auth/index.js';
+import { Logger } from '../../libs/index.js';
+import { UserRdo } from './rdo/user.rdo.js';
 
 @injectable()
 export class UserController extends BaseController {
@@ -65,7 +66,10 @@ export class UserController extends BaseController {
   }
 
   public async create(
-    { body, tokenPayload }: Request<Record<string, unknown>, Record<string, unknown>, CreateUserDto>,
+    {
+      body,
+      tokenPayload,
+    }: Request<Record<string, unknown>, Record<string, unknown>, CreateUserDto>,
     response: Response
   ): Promise<void> {
     if (tokenPayload) {

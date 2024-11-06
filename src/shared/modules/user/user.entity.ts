@@ -1,18 +1,11 @@
+import { Types } from 'mongoose';
 import { defaultClasses, getModelForClass, modelOptions, prop } from '@typegoose/typegoose';
 import { User, UserType } from '../../types/index.js';
 import { createSHA256 } from '../../helpers/index.js';
-import { Types } from 'mongoose';
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export interface UserEntity extends defaultClasses.Base {}
 
-@modelOptions({
-  schemaOptions: {
-    collection: 'users',
-    timestamps: true,
-  },
-})
-// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
+@modelOptions({ schemaOptions: { collection: 'users', timestamps: true } })
 export class UserEntity extends defaultClasses.TimeStamps implements User {
   @prop({ required: true })
   public name: string;
