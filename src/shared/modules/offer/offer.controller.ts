@@ -188,7 +188,10 @@ export class OfferController extends BaseController {
     { params, tokenPayload }: Request<ParamCity>,
     response: Response
   ) {
-    const offers = await this.offerService.findPremiumByCity(params?.city as City, tokenPayload?.id);
+    const offers = await this.offerService.findPremiumByCity(
+      params?.city as City,
+      tokenPayload?.id
+    );
 
     this.ok(response, fillDTO(OfferRdo, offers));
   }
