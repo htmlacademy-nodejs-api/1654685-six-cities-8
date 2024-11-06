@@ -1,17 +1,16 @@
-import { types } from '@typegoose/typegoose';
 import { inject, injectable } from 'inversify';
-
 import { CommentService } from './comment-service.interface.js';
-import { CreateCommentDto } from './dto/create-comment.dto.js';
 import { Component, SortType } from '../../types/index.js';
+import { types } from '@typegoose/typegoose';
 import { CommentEntity } from './comment.entity.js';
-
-const DEFAULT_COMMENT_COUNT = 50;
+import { CreateCommentDto } from './dto/create-comment.dto.js';
+import { DEFAULT_COMMENT_COUNT } from './comment.constant.js';
 
 @injectable()
 export class DefaultCommentService implements CommentService {
   constructor(
-    @inject(Component.CommentModel) private readonly commentModel: types.ModelType<CommentEntity>
+    @inject(Component.CommentModel)
+    private readonly commentModel: types.ModelType<CommentEntity>
   ) {}
 
   public async create(dto: CreateCommentDto): Promise<types.DocumentType<CommentEntity>> {

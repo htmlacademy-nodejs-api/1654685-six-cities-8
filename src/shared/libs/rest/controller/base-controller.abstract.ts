@@ -1,11 +1,12 @@
 import { Response, Router } from 'express';
 import { injectable } from 'inversify';
-import asyncHandler from 'express-async-handler';
 import { StatusCodes } from 'http-status-codes';
+import asyncHandler from 'express-async-handler';
 
 import { Controller } from './controller.interface.js';
-import { HttpMethod, Route } from '../types/index.js';
+import { HttpMethod } from '../types/index.js';
 import { Logger } from '../../logger/index.js';
+import { Route } from '../types/index.js';
 
 @injectable()
 export abstract class BaseController implements Controller {
@@ -38,11 +39,11 @@ export abstract class BaseController implements Controller {
 
     this._router[route.method](route.path, allHandlers);
 
-    this.logger.info(`Маршрут зарегистрирован: ${route.method.toUpperCase()} ${route.path}`);
+    this.logger.info(`Route registered: ${route.method.toUpperCase()} ${route.path}`);
   }
 
-  public send<T>(res: Response, statusCode: number, data: T) {
-    res.type(this.DEFAULT_CONTENT_TYPE).status(statusCode).json(data);
+  public send<T>(response: Response, statusCode: number, data: T) {
+    response.type(this.DEFAULT_CONTENT_TYPE).status(statusCode).json(data);
   }
 
   public created<T>(response: Response, data: T): void {

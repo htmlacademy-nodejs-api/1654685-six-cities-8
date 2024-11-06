@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { jwtVerify } from 'jose';
 import { StatusCodes } from 'http-status-codes';
+
 import { createSecretKey } from 'node:crypto';
-import { ENCODING } from '../../../../constants/index.js';
 
 import { Middleware } from './middleware.interface.js';
 import { HttpError } from '../errors/index.js';
@@ -33,17 +33,17 @@ export class ParseTokenMiddleware implements Middleware {
     const [, token] = authorizationHeader;
 
     try {
-      const { payload } = await jwtVerify(token, createSecretKey(this.jwtSecret, ENCODING));
+      const { payload } = await jwtVerify(token, createSecretKey(this.jwtSecret, 'utf-8'));
 
       if (!isTokenPayload(payload)) {
-        throw new Error('Не корректный токен');
+        throw new Error('Bad token');
       }
 
       request.tokenPayload = { ...payload };
       return next();
     } catch {
       return next(
-        new HttpError(StatusCodes.UNAUTHORIZED, 'Неверный токен', 'AuthenticateMiddleware')
+        new HttpError(StatusCodes.UNAUTHORIZED, 'Invalid token', 'AuthenticateMiddleware')
       );
     }
   }

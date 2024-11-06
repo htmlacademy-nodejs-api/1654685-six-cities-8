@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { ConsoleLogger, Logger } from '../../shared/libs/logger/index.js';
+import { ConsoleLogger, Logger } from '../../shared/libs/index.js';
 import { Command } from '../../cli/index.js';
 
 export class VersionCommand implements Command {

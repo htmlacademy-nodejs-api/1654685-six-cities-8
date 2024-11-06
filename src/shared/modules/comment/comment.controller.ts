@@ -8,22 +8,23 @@ import {
   ValidateDtoMiddleware,
   ValidateObjectIdMiddleware,
 } from '../../libs/rest/index.js';
-import { fillDTO } from '../../helpers/index.js';
 import { Component } from '../../types/index.js';
-
-import { CommentService } from './comment-service.interface.js';
-import { CreateCommentDto } from './dto/create-comment.dto.js';
 import { Logger } from '../../libs/logger/index.js';
+import { CommentService } from './comment-service.interface.js';
+import { OfferService } from '../offer/offer-service.interface.js';
+import { ParamOfferId } from './type/param-offerid.type.js';
+import { fillDTO } from '../../helpers/index.js';
 import { CommentRdo } from './rdo/comment.rdo.js';
-import { OfferService } from '../offer/index.js';
-import { ParamOfferId } from './types/index.js';
+import { CreateCommentDto } from './dto/create-comment.dto.js';
 
 @injectable()
 export class CommentController extends BaseController {
   constructor(
     @inject(Component.Logger) protected readonly logger: Logger,
-    @inject(Component.CommentService) protected readonly commentService: CommentService,
-    @inject(Component.OfferService) protected readonly offerService: OfferService
+    @inject(Component.CommentService)
+    protected readonly commentService: CommentService,
+    @inject(Component.OfferService)
+    protected readonly offerService: OfferService
   ) {
     super(logger);
 
@@ -53,15 +54,15 @@ export class CommentController extends BaseController {
     ]);
   }
 
-  public async getByOfferId({ params }: Request<ParamOfferId>, res: Response) {
+  public async getByOfferId({ params }: Request<ParamOfferId>, response: Response) {
     const comments = await this.commentService.findByOfferId(params?.offerId);
 
-    this.ok(res, fillDTO(CommentRdo, comments));
+    this.ok(response, fillDTO(CommentRdo, comments));
   }
 
   public async create(
     { body, params, tokenPayload }: Request<ParamOfferId, CreateCommentDto>,
-    res: Response
+    response: Response
   ) {
     const result = await this.commentService.create({
       ...body,
@@ -69,6 +70,6 @@ export class CommentController extends BaseController {
       offer: params?.offerId,
     });
 
-    this.created(res, fillDTO(CommentRdo, result));
+    this.created(response, fillDTO(CommentRdo, result));
   }
 }

@@ -1,3 +1,7 @@
 import { ParamsDictionary } from 'express-serve-static-core';
 
-export type ParamCity = { city: string } | ParamsDictionary;
+export type ParamCity =
+  | {
+      city: string;
+    }
+  | ParamsDictionary;

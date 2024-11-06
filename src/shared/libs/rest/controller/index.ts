@@ -1,2 +1,2 @@
-export * from './base-controller.abstract.js';
-export * from './controller.interface.js';
+export { BaseController } from './base-controller.abstract.js';
+export { Controller } from './controller.interface.js';

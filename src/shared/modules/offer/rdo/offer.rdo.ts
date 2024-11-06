@@ -1,5 +1,5 @@
 import { Expose, Type } from 'class-transformer';
-import { City, OfferComfort, OfferType, User } from '../../../types/index.js';
+import { City, OfferComfort, OfferType } from '../../../types/index.js';
 import { UserRdo } from '../../user/index.js';
 
 export class OfferRdo {
@@ -28,9 +28,6 @@ export class OfferRdo {
   isPremium: boolean;
 
   @Expose()
-  isFavorite: boolean;
-
-  @Expose()
   commentsCount: number;
 
   @Expose()
@@ -53,8 +50,14 @@ export class OfferRdo {
 
   @Expose()
   @Type(() => UserRdo)
-  author: User;
+  author: UserRdo;
 
   @Expose()
-  coordinates: number[];
+  latitude: number;
+
+  @Expose()
+  longitude: number;
+
+  @Expose()
+  isFavorite: boolean;
 }

@@ -1,17 +1,19 @@
 export const CreateUserMessages = {
-  email: { invalidFormat: 'Введите действительный e-mail адрес' },
-
-  name: {
-    invalidFormat: 'Свойство name — обязательное',
-    lengthField: 'Минимальная длина — 1, максимальная — 15',
+  email: {
+    invalidFormat: 'email must be a valid address',
   },
-
-  avatarPath: { invalidFormat: 'avatarPath, если он присутствует, должен быть строкой' },
-
-  type: { invalid: 'Свойство type должно иметь значения Regular или Pro' },
-
+  name: {
+    invalidFormat: 'name is required',
+    lengthField: 'min length is 1, max is 15',
+  },
+  avatarPath: {
+    invalidFormat: 'avatarPath if present must be a string',
+  },
+  type: {
+    invalid: 'type must be Regular or Pro',
+  },
   password: {
-    invalidFormat: 'Свойство password — обязательное',
-    lengthField: 'Минимальная длина пароля — 6, максимальная — 12',
+    invalidFormat: 'password is required',
+    lengthField: 'min length for password is 6, max is 12',
   },
 } as const;

@@ -1,6 +1,6 @@
-export * from './command.interface.js';
+export { Command } from './command.interface.js';
 
-export * from './help.command.js';
-export * from './version.command.js';
-export * from './import.command.js';
-export * from './generate.command.js';
+export { HelpCommand } from './help.command.js';
+export { VersionCommand } from './version.command.js';
+export { ImportCommand } from './import.command.js';
+export { GenerateCommand } from './generate.command.js';

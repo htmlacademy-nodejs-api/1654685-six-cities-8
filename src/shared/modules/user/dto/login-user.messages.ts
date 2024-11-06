@@ -1,8 +1,9 @@
 export const CreateLoginUserMessage = {
-  email: { invalidFormat: 'Введите действительный e-mail адрес' },
-
+  email: {
+    invalidFormat: 'email must be a valid address',
+  },
   password: {
-    invalidFormat: 'Свойство password — обязательное',
-    lengthField: 'Длина пароля должна быть от 6 до 12 символов',
+    invalidFormat: 'password is required',
+    lengthField: 'min length for password is 6, max is 12',
   },
 } as const;

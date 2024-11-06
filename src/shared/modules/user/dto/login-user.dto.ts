@@ -1,6 +1,6 @@
-import { Expose } from 'class-transformer';
 import { IsEmail, IsString, Length } from 'class-validator';
 import { CreateLoginUserMessage } from './login-user.messages.js';
+import { Expose } from 'class-transformer';
 
 export class LoginUserDto {
   @IsEmail({}, { message: CreateLoginUserMessage.email.invalidFormat })

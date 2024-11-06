@@ -1,1 +1,1 @@
-export * from './param-offerid.type.js';
+export { ParamOfferId } from './param-offerid.type.js';

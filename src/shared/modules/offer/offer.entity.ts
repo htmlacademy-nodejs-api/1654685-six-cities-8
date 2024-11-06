@@ -24,9 +24,6 @@ export class OfferEntity extends defaultClasses.TimeStamps {
   @prop({ required: true, default: false })
   public isPremium: boolean;
 
-  @prop({ required: true })
-  public rating: number;
-
   @prop({ type: () => String, enum: OfferType, required: true })
   public type: OfferType;
 
@@ -45,7 +42,7 @@ export class OfferEntity extends defaultClasses.TimeStamps {
   @prop({ ref: UserEntity, required: true })
   public author: Ref<UserEntity>;
 
-  @prop({ type: () => Number, required: true })
+  @prop({ type: () => [], required: true })
   public coordinates: number[];
 }
 

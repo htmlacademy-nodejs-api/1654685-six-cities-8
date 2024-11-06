@@ -1,15 +1,15 @@
-import { types } from '@typegoose/typegoose';
 import { inject, injectable } from 'inversify';
-import { Types } from 'mongoose';
-import { generalOfferAggregation, getIsFavoriteAggregation } from './offer.helpers.js';
-
-import { Component, City, SortType } from '../../types/index.js';
 import { OfferService } from './offer-service.interface.js';
+import { Component, SortType } from '../../types/index.js';
+import { Logger } from '../../libs/index.js';
+import { types } from '@typegoose/typegoose';
+import { OfferEntity } from './offer.entity.js';
 import { CreateOfferDto } from './dto/create-offer.dto.js';
 import { UpdateOfferDto } from './dto/update-offer.dto.js';
+import { City } from '../../types/index.js';
+import { Types } from 'mongoose';
 import { UserEntity, UserService } from '../user/index.js';
-import { Logger } from '../../libs/logger/index.js';
-import { OfferEntity } from './offer.entity.js';
+import { generalOfferAggregation, getIsFavoriteAggregation } from './offer.helpers.js';
 
 const DEFAULT_OFFER_COUNT = 60;
 const DEFAULT_PREMIUM_OFFER_COUNT = 3;
@@ -37,7 +37,11 @@ export class DefaultOfferService implements OfferService {
     const favAggregation = getIsFavoriteAggregation(userId);
 
     const offerArray = await this.offerModel.aggregate<types.DocumentType<OfferEntity> | null>([
-      { $match: { _id: new Types.ObjectId(offerId) } },
+      {
+        $match: {
+          _id: new Types.ObjectId(offerId),
+        },
+      },
       ...generalOfferAggregation,
       ...favAggregation,
     ]);
@@ -65,7 +69,11 @@ export class DefaultOfferService implements OfferService {
     return this.offerModel.aggregate([
       { $match: { $expr: { $in: ['$_id', currentUser.favorites] } } },
       ...generalOfferAggregation,
-      { $addFields: { isFavorite: true } },
+      {
+        $addFields: {
+          isFavorite: true,
+        },
+      },
       { $limit: DEFAULT_OFFER_COUNT },
       { $sort: { createdAt: SortType.Down } },
     ]);
@@ -89,7 +97,12 @@ export class DefaultOfferService implements OfferService {
     const favAggregation = getIsFavoriteAggregation(userId);
 
     return this.offerModel.aggregate([
-      { $match: { city, isPremium: true } },
+      {
+        $match: {
+          city,
+          isPremium: true,
+        },
+      },
       ...generalOfferAggregation,
       ...favAggregation,
       { $limit: DEFAULT_PREMIUM_OFFER_COUNT },

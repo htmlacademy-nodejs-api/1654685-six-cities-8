@@ -12,10 +12,10 @@ export class ValidateDtoMiddleware implements Middleware {
   ) {}
 
   public async execute(request: Request, response: Response, next: NextFunction): Promise<void> {
-    const dtoInstance = plainToInstance(this.dto, request[this.type], {
+    const plain = request[this.type];
+    const dtoInstance = plainToInstance(this.dto, plain, {
       excludeExtraneousValues: true,
     });
-
     const errors = await validate(dtoInstance);
 
     if (errors.length > 0) {

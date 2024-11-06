@@ -1,2 +1,2 @@
-export * from './file-writer.interface.js';
-export * from './tsv-file-writer.js';
+export { FileWriter } from './file-writer.interface.js';
+export { TSVFileWriter } from './tsv-file-writer.js';

@@ -5,8 +5,8 @@ import { declination, getFileName } from '../../shared/helpers/index.js';
 
 import { DefaultOfferService, OfferModel, OfferService } from '../../shared/modules/offer/index.js';
 import { DefaultUserService, UserModel, UserService } from '../../shared/modules/user/index.js';
-import { DatabaseClient, MongoDatabaseClient } from '../../shared/libs/database-client/index.js';
-import { ConsoleLogger, Logger } from '../../shared/libs/logger/index.js';
+import { DatabaseClient, MongoDatabaseClient } from '../../shared/libs/index.js';
+import { ConsoleLogger, Logger } from '../../shared/libs/index.js';
 import { TSVOfferFileReader } from '../../shared/libs/index.js';
 import { EventName } from '../../constants/index.js';
 import { Offer } from '../../shared/types/index.js';

@@ -1,5 +1,4 @@
-export * from './comment.entity.js';
-export * from './dto/create-comment.dto.js';
-export * from './comment-service.interface.js';
-export * from './default-comment.service.js';
-export * from './comment.container.js';
+export { CommentService } from './comment-service.interface.js';
+export { createCommentContainer } from './comment.container.js';
+export { CommentEntity, CommentModel } from './comment.entity.js';
+export { DefaultCommentService } from './default-comment.service.js';

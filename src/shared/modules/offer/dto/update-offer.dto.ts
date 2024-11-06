@@ -1,17 +1,17 @@
 import { Expose } from 'class-transformer';
 import {
-  IsArray,
-  IsBoolean,
   IsDateString,
-  IsEnum,
-  IsNumber,
   IsOptional,
+  IsBoolean,
+  MaxLength,
+  MinLength,
+  IsNumber,
   IsString,
+  IsArray,
+  IsEnum,
   Length,
   Max,
-  MaxLength,
   Min,
-  MinLength,
 } from 'class-validator';
 import { City, OfferComfort, OfferType } from '../../../types/index.js';
 import { UpdateOfferValidationMessage } from './update-offer.messages.js';

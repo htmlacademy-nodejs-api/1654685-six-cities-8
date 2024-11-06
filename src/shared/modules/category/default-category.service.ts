@@ -3,7 +3,7 @@ import { DocumentType, types } from '@typegoose/typegoose';
 
 import { CategoryService } from './category-service.interface.js';
 import { Component } from '../../types/index.js';
-import { Logger } from '../../libs/logger/index.js';
+import { Logger } from '../../libs/index.js';
 import { CategoryEntity } from './category.entity.js';
 import { CreateCategoryDto } from './dto/create-category.dto.js';
 

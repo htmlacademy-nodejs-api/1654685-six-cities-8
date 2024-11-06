@@ -3,6 +3,6 @@ import { BaseUserException } from './base-user.exception.js';
 
 export class AuthIncorrectException extends BaseUserException {
   constructor() {
-    super(StatusCodes.UNAUTHORIZED, 'Неправильный логин или пароль пользователя');
+    super(StatusCodes.UNAUTHORIZED, 'Incorrect user email or password');
   }
 }

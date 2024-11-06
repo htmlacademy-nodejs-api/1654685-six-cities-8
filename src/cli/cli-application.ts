@@ -1,5 +1,5 @@
 import { parseArgv } from './utils/parser.js';
-import { ConsoleLogger, Logger } from '../shared/libs/logger/index.js';
+import { ConsoleLogger, Logger } from '../shared/libs/index.js';
 import { Command } from './index.js';
 
 export type CommandInfo = { name: string; description: string; params?: string[] };
