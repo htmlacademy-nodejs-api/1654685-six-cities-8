@@ -1,39 +1,74 @@
 import { inject, injectable } from 'inversify';
 import { Request, Response } from 'express';
-import { fillDTO } from '../../helpers/common.js';
-
-import { BaseController, HttpError, HttpMethod } from '../../libs/rest/index.js';
-import { CommentService } from './comment-service.interface.js';
-import { Logger } from '../../libs/logger/index.js';
-import { StatusCodes } from 'http-status-codes';
+import {
+  BaseController,
+  DocumentExistsMiddleware,
+  HttpMethod,
+  PrivateRouteMiddleware,
+  ValidateDtoMiddleware,
+  ValidateObjectIdMiddleware,
+} from '../../libs/rest/index.js';
+import { fillDTO } from '../../helpers/index.js';
 import { Component } from '../../types/index.js';
+
+import { CommentService } from './comment-service.interface.js';
+import { CreateCommentDto } from './dto/create-comment.dto.js';
+import { Logger } from '../../libs/logger/index.js';
 import { CommentRdo } from './rdo/comment.rdo.js';
+import { OfferService } from '../offer/index.js';
+import { ParamOfferId } from './types/index.js';
 
 @injectable()
 export class CommentController extends BaseController {
   constructor(
     @inject(Component.Logger) protected readonly logger: Logger,
-    @inject(Component.CommentService)
-    protected readonly commentService: CommentService
+    @inject(Component.CommentService) protected readonly commentService: CommentService,
+    @inject(Component.OfferService) protected readonly offerService: OfferService
   ) {
     super(logger);
 
-    this.logger.info('Регистрация маршрутов для CommentController…');
+    this.logger.info('Register routes for CommentController');
 
-    this.addRoute({ path: '/id/:id', method: HttpMethod.get, handler: this.findById });
+    const offerIdMiddlewares = [
+      new ValidateObjectIdMiddleware('offerId'),
+      new DocumentExistsMiddleware(this.offerService, 'Offer', 'offerId'),
+    ];
+
+    this.addRoutes([
+      {
+        path: '/:offerId',
+        handler: this.getByOfferId,
+        middlewares: offerIdMiddlewares,
+      },
+      {
+        path: '/:offerId',
+        method: HttpMethod.post,
+        handler: this.create,
+        middlewares: [
+          new PrivateRouteMiddleware(),
+          ...offerIdMiddlewares,
+          new ValidateDtoMiddleware(CreateCommentDto),
+        ],
+      },
+    ]);
   }
 
-  public async findById({ params }: Request, response: Response) {
-    const offer = await this.commentService.findByOfferId(params.id);
+  public async getByOfferId({ params }: Request<ParamOfferId>, res: Response) {
+    const comments = await this.commentService.findByOfferId(params?.offerId);
 
-    if (!offer) {
-      throw new HttpError(
-        StatusCodes.NOT_FOUND,
-        `Комментарии к предложению №${params.id} не найдены.`,
-        'CommentService'
-      );
-    }
+    this.ok(res, fillDTO(CommentRdo, comments));
+  }
 
-    this.ok(response, fillDTO(CommentRdo, offer));
+  public async create(
+    { body, params, tokenPayload }: Request<ParamOfferId, CreateCommentDto>,
+    res: Response
+  ) {
+    const result = await this.commentService.create({
+      ...body,
+      author: tokenPayload?.id,
+      offer: params?.offerId,
+    });
+
+    this.created(res, fillDTO(CommentRdo, result));
   }
 }

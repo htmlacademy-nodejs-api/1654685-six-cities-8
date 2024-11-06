@@ -1,6 +1,6 @@
 import { Expose, Type } from 'class-transformer';
 import { City, OfferComfort, OfferType, User } from '../../../types/index.js';
-import { UserRdo } from '../../user/rdo/user.rdo.js';
+import { UserRdo } from '../../user/index.js';
 
 export class OfferRdo {
   @Expose()
@@ -26,6 +26,9 @@ export class OfferRdo {
 
   @Expose()
   isPremium: boolean;
+
+  @Expose()
+  isFavorite: boolean;
 
   @Expose()
   commentsCount: number;

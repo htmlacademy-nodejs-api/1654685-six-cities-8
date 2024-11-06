@@ -1,12 +1,12 @@
-import { inject, injectable } from 'inversify';
 import { DocumentType, types } from '@typegoose/typegoose';
+import { inject, injectable } from 'inversify';
 
-import { CreateUserDto } from './dto/create-user.dto.js';
-import { updateUserDto } from './dto/update-user.dto.js';
 import { UserService } from './user-service.interface.js';
-import { UserEntity } from './user.entity.js';
-import { Component } from '../../types/index.js';
+import { CreateUserDto } from './dto/create-user.dto.js';
+import { UpdateUserDto } from './dto/update-user.dto.js';
 import { Logger } from '../../libs/logger/index.js';
+import { Component } from '../../types/index.js';
+import { UserEntity } from './user.entity.js';
 
 @injectable()
 export class DefaultUserService implements UserService {
@@ -30,6 +30,10 @@ export class DefaultUserService implements UserService {
     return this.userModel.findOne({ email });
   }
 
+  public async findById(id: string): Promise<DocumentType<UserEntity> | null> {
+    return this.userModel.findById(id);
+  }
+
   public async findOrCreate(dto: CreateUserDto, salt: string): Promise<DocumentType<UserEntity>> {
     const existingUser = await this.findByEmail(dto.email);
 
@@ -37,12 +41,12 @@ export class DefaultUserService implements UserService {
       return existingUser;
     }
 
-    return await this.create(dto, salt);
+    return this.create(dto, salt);
   }
 
   public async updateById(
     userId: string,
-    dto: updateUserDto
+    dto: UpdateUserDto
   ): Promise<DocumentType<UserEntity> | null> {
     return this.userModel.findByIdAndUpdate(userId, dto, { new: true });
   }

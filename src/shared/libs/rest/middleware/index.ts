@@ -5,3 +5,5 @@ export * from './document-exists.middleware.js';
 export * from './upload-file.middleware.js';
 export * from './parse-token.middleware.js';
 export * from './private-route.middleware.js';
+export * from './own-offer.middleware.js';
+export * from './validate-city-query.middlware.js';

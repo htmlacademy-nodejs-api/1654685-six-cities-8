@@ -40,7 +40,7 @@ export class CliApplication {
     });
   }
 
-  public async processCommand(argv: string[], commands?: Command[]) {
+  public processCommand(argv: string[], commands?: Command[]) {
     if (commands?.length) {
       this.register(commands);
     }

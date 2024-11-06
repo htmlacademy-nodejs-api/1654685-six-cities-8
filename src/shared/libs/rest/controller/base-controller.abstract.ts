@@ -1,10 +1,11 @@
-import { injectable } from 'inversify';
-import { Controller } from './controller.interface.js';
 import { Response, Router } from 'express';
-import { Logger } from '../../logger/index.js';
-import { HttpMethod, Route } from '../types/index.js';
-import { StatusCodes } from 'http-status-codes';
+import { injectable } from 'inversify';
 import asyncHandler from 'express-async-handler';
+import { StatusCodes } from 'http-status-codes';
+
+import { Controller } from './controller.interface.js';
+import { HttpMethod, Route } from '../types/index.js';
+import { Logger } from '../../logger/index.js';
 
 @injectable()
 export abstract class BaseController implements Controller {
@@ -18,12 +19,14 @@ export abstract class BaseController implements Controller {
   }
 
   public addRoutes(routes: Route | Route[]) {
-    for (const route of [routes].flat(2)) {
+    const normalizedRoutes = Array.isArray(routes) ? routes : [routes];
+
+    for (const route of normalizedRoutes) {
       this.addRoute(route);
     }
   }
 
-  public addRoute(route: Route) {
+  private addRoute(route: Route) {
     route.method ??= HttpMethod.get;
     const wrapperAsyncHandler = asyncHandler(route.handler.bind(this));
     const middlewareHandlers = route.middlewares?.map((item) =>
@@ -38,8 +41,8 @@ export abstract class BaseController implements Controller {
     this.logger.info(`Маршрут зарегистрирован: ${route.method.toUpperCase()} ${route.path}`);
   }
 
-  public send<T>(response: Response, statusCode: number, data: T) {
-    response.type(this.DEFAULT_CONTENT_TYPE).status(statusCode).json(data);
+  public send<T>(res: Response, statusCode: number, data: T) {
+    res.type(this.DEFAULT_CONTENT_TYPE).status(statusCode).json(data);
   }
 
   public created<T>(response: Response, data: T): void {

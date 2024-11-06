@@ -35,12 +35,12 @@ export class ParseTokenMiddleware implements Middleware {
     try {
       const { payload } = await jwtVerify(token, createSecretKey(this.jwtSecret, ENCODING));
 
-      if (isTokenPayload(payload)) {
-        request.tokenPayload = { ...payload };
-        return next();
-      } else {
+      if (!isTokenPayload(payload)) {
         throw new Error('Не корректный токен');
       }
+
+      request.tokenPayload = { ...payload };
+      return next();
     } catch {
       return next(
         new HttpError(StatusCodes.UNAUTHORIZED, 'Неверный токен', 'AuthenticateMiddleware')

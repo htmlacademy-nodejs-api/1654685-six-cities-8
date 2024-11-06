@@ -1,5 +1,5 @@
 export const CreateUserMessages = {
-  email: { invalidFormat: 'Введите действительный email адрес' },
+  email: { invalidFormat: 'Введите действительный e-mail адрес' },
 
   name: {
     invalidFormat: 'Свойство name — обязательное',

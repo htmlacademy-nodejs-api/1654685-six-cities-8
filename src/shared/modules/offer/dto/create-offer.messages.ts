@@ -1,15 +1,20 @@
 export const CreateOfferValidationMessage = {
   createdAt: { invalidFormat: 'Свойство createdAt должно быть в формате ISO' },
   title: {
+    invalidFormat: 'Свойство title должно быть строкой',
     minLength: 'Минимальная длина заголовка должна быть 10',
     maxLength: 'Максимальная длина заголовка должна быть 100',
   },
   description: {
+    invalidFormat: 'Свойство description должно быть строкой',
     minLength: 'Минимальная длина описания должна быть 20',
     maxLength: 'Максимальная длина описания должна быть 1024',
   },
   city: { invalid: 'Указанный город не поддерживается' },
-  preview: { maxLength: 'Свойство preview не должно быть длиннее 256 символов.' },
+  preview: {
+    invalidFormat: 'Свойство preview должно быть строкой',
+    maxLength: 'Свойство preview не должно быть длиннее 256 символов.',
+  },
   photos: {
     invalidFormat: 'Свойство photos должно быть массивом',
     maxLength: 'Свойство photos не должно иметь более 6 элементов.',

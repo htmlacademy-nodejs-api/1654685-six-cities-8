@@ -11,14 +11,14 @@ export class ValidateObjectIdMiddleware implements Middleware {
   public execute({ params }: Request, _response: Response, next: NextFunction): void {
     const objectId = params[this.param];
 
-    if (Types.ObjectId.isValid(objectId)) {
-      return next();
+    if (!Types.ObjectId.isValid(objectId)) {
+      throw new HttpError(
+        StatusCodes.BAD_REQUEST,
+        `${objectId} недействительный идентификатор`,
+        'ValidateObjectIdMiddleware'
+      );
     }
 
-    throw new HttpError(
-      StatusCodes.BAD_REQUEST,
-      `${objectId} недействительный идентификатор`,
-      'ValidateObjectIdMiddleware'
-    );
+    return next();
   }
 }

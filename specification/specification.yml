@@ -41,7 +41,13 @@ paths:
                 $ref: '#/components/schemas/user'
 
         '409':
-          description: Пользователь с таким email уже существует.
+          description: Пользователь с таким e-mail уже существует.
+
+        '401':
+          description: Создать аккаунт могут только анонимные пользователи.
+
+        '400':
+          description: Ошибка валидации данных пользователя. В ответе объект с ошибками.
 
   /users/login:
     post:
@@ -67,7 +73,10 @@ paths:
                 $ref: '#/components/schemas/token'
 
         '401':
-          description: Неверный email или пароль.
+          description: Неверный e-mail или пароль.
+
+        '400':
+          description: Ошибка валидации данных пользователя. В ответе объект с ошибками.
 
     get:
       tags:
@@ -86,17 +95,6 @@ paths:
         '401':
           description: Пользователь не аутентифицирован.
 
-  /users/logout:
-    get:
-      tags:
-        - users
-      summary: Деавторизация пользователя
-      description: Реализует выход пользователя из приложения
-
-      responses:
-        '204':
-          description: Пользователь вышел из приложения.
-
   /users/{userId}/avatar:
     post:
       tags:
@@ -105,12 +103,20 @@ paths:
       description: Загружает изображение аватара пользователя. Изображение
         аватара должно быть в формате `png` или `jpg`.
 
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+
       requestBody:
         content:
           multipart/form-data:
             schema:
               type: object
               properties:
+                # 'file' will be the field name in this multipart request
                 file:
                   type: string
                   format: binary
@@ -118,8 +124,43 @@ paths:
       responses:
         '201':
           description: Аватар пользователя был загружен.
+          content:
+            application/json:
+              schema:
+                type: object
 
-  /offers/add:
+                properties:
+                  filepath:
+                    type: string
+                    example: /keks.png
+
+  /offers:
+    get:
+      tags:
+        - offers
+      summary: Все предложения
+      description: Выдаёт массив последних предложений. Максимальный размер берётся из значения по умолчанию или из query параметра.
+
+      parameters:
+        - name: count
+          in: query
+          required: false
+          schema:
+            type: integer
+
+      responses:
+        '200':
+          description: В теле ответа информация о найденных предложениях.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/offer'
+
+        '400':
+          description: Отправлены некорректные данные (query параметр count).
+
     post:
       tags:
         - offers
@@ -145,6 +186,263 @@ paths:
         '400':
           description: Отправлены некорректные данные.
 
+  /offers/{offerId}:
+    get:
+      tags:
+        - offers
+      summary: Поиск предложения по id
+      description: Выдаёт предложение об аренде на основе id предложения в url.
+
+      parameters:
+        - name: offerId
+          in: path
+          required: true
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: Предложение найдено. В теле ответа информация о предложении.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/offer'
+
+        '400':
+          description: Отправлены некорректные данные.
+
+        '404':
+          description: Предложение с указанным id не найдено.
+
+    patch:
+      tags:
+        - offers
+      summary: Редактирование предложения
+      description: Создаёт предложение об аренде на основе id предложения в url и данных в теле запроса.
+
+      parameters:
+        - name: offerId
+          in: path
+          required: true
+          schema:
+            type: string
+
+      requestBody:
+        description: Информация для редактирования предложения.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/editOffer'
+        required: true
+
+      responses:
+        '201':
+          description: Предложение об аренде создано. В теле ответа информация о новом предложении.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/offer'
+
+        '400':
+          description: Отправлены некорректные данные.
+
+        '401':
+          description: Ошибка авторизации пользователя.
+
+        '404':
+          description: Предложение с указанным id не найдено.
+
+    delete:
+      tags:
+        - offers
+      summary: Удаление предложения
+      description: Удаляет предложение об аренде и комментарии к нему на основе id предложения в url.
+
+      parameters:
+        - name: offerId
+          in: path
+          required: true
+          schema:
+            type: string
+
+      responses:
+        '204':
+          description: Предложение и комментарии к нему были удалены.
+
+        '401':
+          description: Ошибка авторизации пользователя.
+
+        '404':
+          description: Предложение с указанным id не найдено.
+
+  /offers/favorites:
+    get:
+      tags:
+        - offers
+      summary: Избранные предложения.
+      description: Выдаёт избранные предложения для авторизованного пользователя.
+
+      responses:
+        '200':
+          description: В теле ответа информация о найденных предложениях.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/offer'
+
+        '401':
+          description: Ошибка авторизации пользователя.
+
+  /offers/premium/{city}:
+    get:
+      tags:
+        - offers
+      summary: Премиальные предложения по городу.
+      description: Выдаёт до трёх премиальных предложений соответствующих указанному в параметре городу.
+
+      parameters:
+        - name: city
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/City'
+
+      responses:
+        '200':
+          description: В теле ответа информация о найденных предложениях.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/offer'
+
+        '400':
+          description: Отправлены некорректные данные (параметр city).
+
+  /offers/{offerId}/favorites:
+    post:
+      tags:
+        - offers
+      summary: Добавление в избранное.
+      description: Добавляет предложение в избранное по указанному id для авторизованного пользователя.
+
+      parameters:
+        - name: offerId
+          in: path
+          required: true
+          schema:
+            type: string
+
+      responses:
+        '201':
+          description: Предложение было добавлено в избранное.
+
+        '400':
+          description: Отправлены некорректные данные.
+
+        '401':
+          description: Ошибка авторизации пользователя.
+
+        '404':
+          description: Предложение с указанным id не найдено.
+
+    delete:
+      tags:
+        - offers
+      summary: Удаление из избранного.
+      description: Удаляет предложение из избранного по указанному id для авторизованного пользователя.
+
+      parameters:
+        - name: offerId
+          in: path
+          required: true
+          schema:
+            type: string
+
+      responses:
+        '204':
+          description: Предложение было удалено из избранного.
+
+        '400':
+          description: Отправлены некорректные данные.
+
+        '401':
+          description: Ошибка авторизации пользователя.
+
+        '404':
+          description: Предложение с указанным id не найдено.
+
+  /comments/{offerId}:
+    get:
+      tags:
+        - comments
+      summary: Получение комментариев.
+      description: Выдаёт комментарии к предложению по id предложения в параметре.
+
+      parameters:
+        - name: offerId
+          in: path
+          required: true
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: Найденные комментарии.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+
+        '400':
+          description: Отправлены некорректные данные.
+
+        '404':
+          description: Предложение с указанным id не найдено.
+
+    post:
+      tags:
+        - comments
+      summary: Добавление комментария.
+      description: Добавляет комментарий по id предложения в параметре и на основе данных в теле запроса. Для авторизованного пользователя.
+
+      parameters:
+        - name: offerId
+          in: path
+          required: true
+          schema:
+            type: string
+
+      requestBody:
+        description: Информация для добавления комментария.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createComment'
+        required: true
+
+      responses:
+        '201':
+          description: Комментарий был создан.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+
+        '400':
+          description: Отправлены некорректные данные.
+
+        '401':
+          description: Ошибка авторизации.
+
+        '404':
+          description: Предложение с указанным id не найдено.
+
 components:
   schemas:
     createUser:
@@ -167,8 +465,17 @@ components:
           type: string
           example: 123456
 
+        avatarPath:
+          type: string
+          example: keks.png
+
     user:
       type: object
+      required:
+        - id
+        - email
+        - name
+        - type
 
       properties:
         id:
@@ -182,6 +489,12 @@ components:
         name:
           type: string
           example: 'Keks'
+
+        type:
+          type: string
+          enum:
+            - Regular
+            - Pro
 
     login:
       type: object
@@ -201,9 +514,13 @@ components:
     token:
       type: object
       properties:
+        email:
+          type: string
+          example: keks@htmlacademy.ru
+
         token:
           type: string
-          example: 6329c3d6a04ab1061c6425ea
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiS2VrcyIsImlhdCI6MTUxNjIzOTAyMn0.b70TcqqCbA623pnThjhwGeohCbjFOI6I6P2rbFGQuO4
 
     createOffer:
       type: object
@@ -213,13 +530,13 @@ components:
         - city
         - preview
         - photos
-        - isPremium
         - type
         - roomsCount
         - guestsCount
         - price
         - comforts
-        - coordinates
+        - latitude
+        - longitude
 
       properties:
         title:
@@ -235,21 +552,21 @@ components:
           maxLength: 1024
 
         city:
-          $ref: '#/components/schemas/cities'
+          $ref: '#/components/schemas/City'
 
         preview:
           type: string
           example: hotel.jpg
 
         photos:
-          $ref: '#/components/schemas/photos'
+          $ref: '#/components/schemas/Photos'
 
         isPremium:
           type: boolean
           example: true
 
         type:
-          $ref: '#/components/schemas/type'
+          $ref: '#/components/schemas/Types'
 
         roomsCount:
           type: integer
@@ -269,15 +586,73 @@ components:
           minimum: 100
           maximum: 100000
 
+        comforts:
+          $ref: '#/components/schemas/Comforts'
+
         coordinates:
-          $ref: '#/components/schemas/coordinates'
+          $ref: '#/components/schemas/Coordinates'
+
+    editOffer:
+      type: object
+
+      properties:
+        title:
+          type: string
+          example: 'Hotel California'
+          minLength: 10
+          maxLength: 100
+
+        description:
+          type: string
+          example: 'Such a lovely place'
+          minLength: 20
+          maxLength: 1024
+
+        city:
+          $ref: '#/components/schemas/City'
+
+        preview:
+          type: string
+          example: hotel.jpg
+
+        photos:
+          $ref: '#/components/schemas/Photos'
+
+        isPremium:
+          type: boolean
+          example: true
+
+        type:
+          $ref: '#/components/schemas/Types'
+
+        roomsCount:
+          type: integer
+          example: 4
+          minimum: 1
+          maximum: 8
+
+        guestsCount:
+          type: integer
+          example: 4
+          minimum: 1
+          maximum: 10
+
+        price:
+          type: integer
+          example: 10000
+          minimum: 100
+          maximum: 100000
 
         comforts:
-          $ref: '#/components/schemas/comforts'
+          $ref: '#/components/schemas/Comforts'
+
+        coordinates:
+          $ref: '#/components/schemas/Coordinates'
 
     offer:
       type: object
       required:
+        - id
         - title
         - description
         - createdAt
@@ -314,14 +689,14 @@ components:
           example: '2022-04-06T08:45:40.283Z'
 
         city:
-          $ref: '#/components/schemas/cities'
+          $ref: '#/components/schemas/City'
 
         preview:
           type: string
           example: hotel.jpg
 
         photos:
-          $ref: '#/components/schemas/photos'
+          $ref: '#/components/schemas/Photos'
 
         isPremium:
           type: boolean
@@ -336,7 +711,7 @@ components:
           example: 4.5
 
         type:
-          $ref: '#/components/schemas/type'
+          $ref: '#/components/schemas/Types'
 
         roomsCount:
           type: integer
@@ -351,7 +726,7 @@ components:
           example: 10000
 
         comforts:
-          $ref: '#/components/schemas/comforts'
+          $ref: '#/components/schemas/Comforts'
 
         author:
           $ref: '#/components/schemas/user'
@@ -361,9 +736,9 @@ components:
           example: 50
 
         coordinates:
-          $ref: '#/components/schemas/coordinates'
+          $ref: '#/components/schemas/Coordinates'
 
-    cities:
+    City:
       type: string
       enum:
         - Paris
@@ -373,7 +748,7 @@ components:
         - Hamburg
         - Dusseldorf
 
-    type:
+    Types:
       type: string
       enum:
         - Apartment
@@ -381,7 +756,7 @@ components:
         - Room
         - Hotel
 
-    comforts:
+    Comforts:
       type: array
       items:
         type: string
@@ -394,7 +769,7 @@ components:
           - Towels
           - Fridge
 
-    photos:
+    Photos:
       type: array
       items:
         type: string
@@ -406,10 +781,43 @@ components:
         - photo5.jpg
         - photo6.jpg
 
-    coordinates:
+    Coordinates:
       type: array
       items:
         type: string
       example:
         - 53.550341 # latitude
         - 10.000654 # longitude
+
+    Comment:
+      type: object
+      required:
+        - text
+        - rating
+        - author
+        - createdAt
+      properties:
+        text:
+          type: string
+          example: Текст комментария
+        rating:
+          type: number
+          example: 4
+        author:
+          $ref: '#/components/schemas/user'
+        createdAt:
+          type: string
+          example: '2022-04-06T08:45:40.283Z'
+
+    createComment:
+      type: object
+      required:
+        - text
+        - rating
+      properties:
+        text:
+          type: string
+          example: Текст комментария
+        rating:
+          type: number
+          example: 4

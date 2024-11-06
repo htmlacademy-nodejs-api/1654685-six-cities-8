@@ -1,14 +1,14 @@
-import { SignJWT } from 'jose';
 import { inject, injectable } from 'inversify';
 import { createSecretKey } from 'node:crypto';
-import { Component } from '../../types/index.js';
-import { ENCODING } from '../../../constants/index.js';
+import { SignJWT } from 'jose';
 
-import { UserNotFoundException, UserPasswordIncorrectException } from './errors/index.js';
 import { LoginUserDto, UserEntity, UserService } from '../user/index.js';
 import { Config, RestSchema } from '../../libs/config/index.js';
+import { AuthIncorrectException } from './errors/index.js';
 import { AuthService } from './auth-service.interface.js';
+import { ENCODING } from '../../../constants/index.js';
 import { Logger } from '../../libs/logger/index.js';
+import { Component } from '../../types/index.js';
 import { TokenPayload } from './types/index.js';
 
 export const JWT_ALGORITHM = 'HS256';
@@ -27,7 +27,7 @@ export class DefaultAuthService implements AuthService {
     const secretKey = createSecretKey(jwtSecret, ENCODING);
     const tokenPayload: TokenPayload = { email: user.email, name: user.name, id: user.id };
 
-    this.logger.info(`Создание токена для ${user.email}`);
+    this.logger.info(`Create token for ${user.email}`);
     return new SignJWT(tokenPayload)
       .setProtectedHeader({ alg: JWT_ALGORITHM })
       .setIssuedAt()
@@ -39,12 +39,12 @@ export class DefaultAuthService implements AuthService {
     const user = await this.userService.findByEmail(dto.email);
     if (!user) {
       this.logger.warn(`Пользователь с ${dto.email} не найден`);
-      throw new UserNotFoundException();
+      throw new AuthIncorrectException();
     }
 
     if (!user.verifyPassword(dto.password, this.config.get('SALT'))) {
       this.logger.warn(`Неправильный пароль для ${dto.email}`);
-      throw new UserPasswordIncorrectException();
+      throw new AuthIncorrectException();
     }
 
     return user;
