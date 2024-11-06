@@ -1,4 +1,4 @@
-import { CommandInfo } from '../../cli/index.js';
+import { CommandInfo } from '../index.js';
 
 export interface Command {
   /** @example --help */

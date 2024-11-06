@@ -5,7 +5,7 @@ import { DefaultCategoryService } from './default-category.service.js';
 import { CategoryEntity, CategoryModel } from './category.entity.js';
 import { CategoryService } from './category-service.interface.js';
 import { CategoryController } from './category.controller.js';
-import { Controller } from '../../libs/rest/index.js';
+import { Controller } from '../../libs/index.js';
 import { Component } from '../../types/index.js';
 
 export function createCategoryContainer() {

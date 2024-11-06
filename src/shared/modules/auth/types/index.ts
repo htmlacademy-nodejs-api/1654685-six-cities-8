@@ -1,1 +1,1 @@
-export * from './TokenPayload.js';
+export { TokenPayload } from './token-payload.js';

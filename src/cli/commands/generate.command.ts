@@ -1,7 +1,7 @@
 import got from 'got';
 import { getFileName } from '../../shared/helpers/index.js';
 import { TSVOfferGenerator, TSVFileWriter } from '../../shared/libs/index.js';
-import { ConsoleLogger, Logger } from '../../shared/libs/logger/index.js';
+import { ConsoleLogger, Logger } from '../../shared/libs/index.js';
 import { MockServerData } from '../../shared/types/index.js';
 import { Command } from '../../cli/index.js';
 

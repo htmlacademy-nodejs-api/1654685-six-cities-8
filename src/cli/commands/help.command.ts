@@ -1,5 +1,5 @@
 import { Command, CommandInfo } from '../../cli/index.js';
-import { ConsoleLogger, Logger } from '../../shared/libs/logger/index.js';
+import { ConsoleLogger, Logger } from '../../shared/libs/index.js';
 
 export class HelpCommand implements Command {
   readonly name = '--help';

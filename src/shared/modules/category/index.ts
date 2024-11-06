@@ -1,5 +1,5 @@
-export * from './category.entity.js';
-export * from './dto/create-category.dto.js';
-export * from './category-service.interface.js';
-export * from './default-category.service.js';
-export * from './category.container.js';
+export { DefaultCategoryService } from './default-category.service.js';
+export { CategoryEntity, CategoryModel } from './category.entity.js';
+export { CategoryService } from './category-service.interface.js';
+export { createCategoryContainer } from './category.container.js';
+export { CreateCategoryDto } from './dto/create-category.dto.js';

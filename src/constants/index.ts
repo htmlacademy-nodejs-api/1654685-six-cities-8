@@ -1,2 +1,2 @@
 export * from './common.js';
-export * from './city.js';
+export { coordinatesCityMap } from './city.js';
