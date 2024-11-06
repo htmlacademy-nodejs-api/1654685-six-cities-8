@@ -17,10 +17,7 @@ export class HelpCommand implements Command {
   }
 
   public async execute(_args: string[], commands: CommandInfo[]) {
-    const list = commands.map((command) => ({
-      ...command,
-      pattern: this.getPattern(command),
-    }));
+    const list = commands.map((command) => ({ ...command, pattern: this.getPattern(command) }));
 
     this.logger.info(
       'Подготовка данных для REST API сервера.\nПример: {main.js --<command> [--arguments]}'

@@ -2,10 +2,10 @@ import { inject, injectable } from 'inversify';
 import { DocumentType, types } from '@typegoose/typegoose';
 
 import { CommentService } from './comment-service.interface.js';
-import { Component, SortType } from '../../types/index.js';
-import { Logger } from '../../libs/logger/index.js';
-import { CommentEntity } from './comment.entity.js';
 import { CreateCommentDto } from './dto/create-comment.dto.js';
+import { Component, SortType } from '../../types/index.js';
+import { CommentEntity } from './comment.entity.js';
+import { Logger } from '../../libs/logger/index.js';
 
 const DEFAULT_COMMENT_COUNT = 50;
 
@@ -18,9 +18,9 @@ export class DefaultCommentService implements CommentService {
 
   public async create(dto: CreateCommentDto): Promise<DocumentType<CommentEntity>> {
     const result = await this.commentModel.create(dto);
-
     this.logger.info(`Новый комментарий создан: ${dto.text}`);
-    return result;
+
+    return result.populate('author');
   }
 
   public async findByOfferId(offerId: string): Promise<types.DocumentType<CommentEntity>[]> {

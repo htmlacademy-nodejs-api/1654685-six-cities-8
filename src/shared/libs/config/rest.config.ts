@@ -14,14 +14,14 @@ export class RestConfig implements Config<RestSchema> {
     const parsedOutput = config();
 
     if (parsedOutput.error) {
-      throw new Error("Can't read .env file. Perhaps the file does not exists.");
+      throw new Error('Файл «.env» — не найден.');
     }
 
     configRestSchema.load({});
     configRestSchema.validate({ allowed: 'strict', output: this.logger.info });
 
     this.config = configRestSchema.getProperties();
-    this.logger.info('.env file found and successfully parsed!');
+    this.logger.info('Файл «.env» — успешно проанализирован!');
   }
 
   public get<T extends keyof RestSchema>(key: T): RestSchema[T] {

@@ -1,3 +1,4 @@
+import { ClassConstructor, plainToInstance } from 'class-transformer';
 import dayjs from 'dayjs';
 import {
   DELIMITER,
@@ -57,4 +58,8 @@ export function declination(count: number, words: string[]) {
 
   const CASES = [2, 0, 1, 1, 1, 2] as const;
   return words[count % 100 > 4 && count % 100 < 20 ? 2 : CASES[count % 10 < 5 ? count % 10 : 5]];
+}
+
+export function fillDTO<T, V>(someDto: ClassConstructor<T>, plainObject: V) {
+  return plainToInstance(someDto, plainObject, { excludeExtraneousValues: true });
 }

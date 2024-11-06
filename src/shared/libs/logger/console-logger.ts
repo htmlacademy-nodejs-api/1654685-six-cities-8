@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import { Logger } from './logger.interface.js';
+import { DEFAULT_ERROR } from './logger.constant.js';
 import { ChalkColorMethod } from '../../types/index.js';
 
 const BRACES_REGEX = /{([a-zA-Z0-9А-Яа-я_()[\]<>\-.:/ ]+)}/gm;
@@ -34,16 +35,11 @@ export class ConsoleLogger implements Logger {
     console.warn(chalk.yellow(ConsoleLogger.stylizeMessage(message, 'whiteBright')), ...args);
   }
 
-  error(error: unknown, message = 'Произошла непредвиденная ошибка', ...attrs: unknown[]) {
+  error(error: unknown, ...attrs: unknown[]) {
     const resultMessage = error instanceof Error ? error.message : error;
 
     console.error(
-      chalk.red(
-        ConsoleLogger.stylizeMessage(
-          typeof resultMessage === 'string' ? resultMessage : message,
-          'whiteBright'
-        )
-      ),
+      chalk.red(ConsoleLogger.stylizeMessage(resultMessage || DEFAULT_ERROR, 'whiteBright')),
       ...attrs
     );
   }

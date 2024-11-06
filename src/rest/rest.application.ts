@@ -1,8 +1,9 @@
 import { inject, injectable } from 'inversify';
+import express, { Express } from 'express';
 
+import { Controller, ExceptionFilter } from '../shared/libs/rest/index.js';
 import { DatabaseClient } from '../shared/libs/database-client/index.js';
 import { Config, RestSchema } from '../shared/libs/config/index.js';
-import { OfferService } from '../shared/modules/offer/index.js';
 import { Logger } from '../shared/libs/logger/index.js';
 import { Component } from '../shared/types/index.js';
 
@@ -11,10 +12,53 @@ export class RestApplication {
   constructor(
     @inject(Component.Logger) private readonly logger: Logger,
     @inject(Component.Config) private readonly config: Config<RestSchema>,
-    @inject(Component.OfferService) private readonly offerService: OfferService,
     @inject(Component.DatabaseClient)
-    private readonly databaseClient: DatabaseClient
-  ) {}
+    @inject(Component.UserController)
+    @inject(Component.OfferController)
+    @inject(Component.CommentController)
+    @inject(Component.CategoryController)
+    @inject(Component.ExceptionFilter)
+    private readonly databaseClient: DatabaseClient,
+    private readonly userController: Controller,
+    private readonly offerController: Controller,
+    private readonly commentController: Controller,
+    private readonly categoryController: Controller,
+    private readonly appExceptionFilter: ExceptionFilter
+  ) {
+    this.server = express();
+  }
+
+  private readonly server: Express;
+
+  private initServer() {
+    this.logger.info('Инициализация сервера…');
+
+    const port = this.config.get('PORT');
+    this.server.listen(port);
+
+    this.logger.info(`🚀 Сервер запущен: http://localhost:${port}`);
+  }
+
+  private initControllers() {
+    this.logger.info('Инициализация контроллеров');
+    this.server.use('/users', this.userController.router);
+    this.server.use('/offers', this.offerController.router);
+    this.server.use('/comment', this.commentController.router);
+    this.server.use('/category', this.categoryController.router);
+    this.logger.info('Инициализация контроллеров завершена');
+  }
+
+  private initMiddleware() {
+    this.logger.info('Инициализация middleware-ов');
+    this.server.use(express.json());
+    this.logger.info('Инициализация middleware-ов завершена');
+  }
+
+  private initExceptionFilters() {
+    this.logger.info('Инициализация фильтров исключений');
+    this.server.use(this.appExceptionFilter.catch.bind(this.appExceptionFilter));
+    this.logger.info('Инициализация фильтров исключений завершена');
+  }
 
   private async initDb() {
     await this.databaseClient.connect(this.config.mongoUri);
@@ -28,8 +72,10 @@ export class RestApplication {
     await this.initDb();
     this.logger.info('Инициализация базы данных завершена');
 
-    const offers = await this.offerService.find();
+    this.initMiddleware();
+    this.initControllers();
+    this.initExceptionFilters();
 
-    this.logger.info('Предложения', offers);
+    this.initServer();
   }
 }

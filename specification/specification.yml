@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.0.3
 
 info:
   title: API-сервер для демо-проекта «Шесть городов»
@@ -6,13 +6,11 @@ info:
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
-  version: 2.0.0
+  version: 1.0.0
 
 tags:
   - name: offers
-    description: Действия с объявлениями.
-  - name: categories
-    description: Действия с категориями.
+    description: Действия с предложениями по аренде.
   - name: comments
     description: Действия с комментариями.
   - name: users
@@ -34,23 +32,42 @@ paths:
               $ref: '#/components/schemas/createUser'
         required: true
 
-        responses:
-          "201":
-            description: Пользователь зарегистрирован. Объект пользователя.
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/user'
+      responses:
+        '201':
+          description: Пользователь зарегистрирован. Объект пользователя.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
 
-          "409":
-            description: Пользователь с таким email уже существует.
+        '409':
+          description: Пользователь с таким email уже существует.
 
   /users/login:
     post:
       tags:
         - users
-      summary: Авторизация пользователя
-      description: Авторизует пользователя на основе логина и пароля
+      summary: Аутентификация пользователя
+      description: Аутентифицирует пользователя на основе логина и пароля
+
+      requestBody:
+        description: Информация для создания нового пользователя.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/login'
+        required: true
+
+      responses:
+        '200':
+          description: Пользователь аутентифицировался. Тело ответа содержит токен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/token'
+
+        '401':
+          description: Неверный email или пароль.
 
     get:
       tags:
@@ -58,31 +75,93 @@ paths:
       summary: Проверка состояния пользователя
       description: Возвращает информацию по авторизованному пользователю
 
+      responses:
+        '200':
+          description: Пользователь аутентифицирован. Тело ответа содержит информацию о пользователе.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+
+        '401':
+          description: Пользователь не аутентифицирован.
+
+  /users/logout:
+    get:
+      tags:
+        - users
+      summary: Деавторизация пользователя
+      description: Реализует выход пользователя из приложения
+
+      responses:
+        '204':
+          description: Пользователь вышел из приложения.
+
   /users/{userId}/avatar:
     post:
       tags:
         - users
       summary: Загрузить изображение аватара
-      description: Загружает изображение аватара пользователя.
-        Изображение аватара должно быть в формате `png` или `jpg`.
+      description: Загружает изображение аватара пользователя. Изображение
+        аватара должно быть в формате `png` или `jpg`.
+
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+
+      responses:
+        '201':
+          description: Аватар пользователя был загружен.
+
+  /offers/add:
+    post:
+      tags:
+        - offers
+      summary: Создание предложения
+      description: Создаёт предложение об аренде на основе данных в теле запроса.
+
+      requestBody:
+        description: Информация для создания нового предложения.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createOffer'
+        required: true
+
+      responses:
+        '201':
+          description: Предложение об аренде создано. В теле ответа информация о новом предложении.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/offer'
+
+        '400':
+          description: Отправлены некорректные данные.
 
 components:
   schemas:
     createUser:
       type: object
+      required:
+        - email
+        - name
+        - password
 
       properties:
         email:
           type: string
           example: keks@htmlacademy.ru
 
-        firstname:
+        name:
           type: string
           example: Keks
-
-        lastname:
-          type: string
-          example: Cat
 
         password:
           type: string
@@ -99,3 +178,238 @@ components:
         email:
           type: string
           example: keks@htmlacademy.ru
+
+        name:
+          type: string
+          example: 'Keks'
+
+    login:
+      type: object
+      required:
+        - email
+        - password
+
+      properties:
+        email:
+          type: string
+          example: keks@htmlacademy.ru
+
+        password:
+          type: string
+          example: 123456
+
+    token:
+      type: object
+      properties:
+        token:
+          type: string
+          example: 6329c3d6a04ab1061c6425ea
+
+    createOffer:
+      type: object
+      required:
+        - title
+        - description
+        - city
+        - preview
+        - photos
+        - isPremium
+        - type
+        - roomsCount
+        - guestsCount
+        - price
+        - comforts
+        - coordinates
+
+      properties:
+        title:
+          type: string
+          example: 'Hotel California'
+          minLength: 10
+          maxLength: 100
+
+        description:
+          type: string
+          example: 'Such a lovely place'
+          minLength: 20
+          maxLength: 1024
+
+        city:
+          $ref: '#/components/schemas/cities'
+
+        preview:
+          type: string
+          example: hotel.jpg
+
+        photos:
+          $ref: '#/components/schemas/photos'
+
+        isPremium:
+          type: boolean
+          example: true
+
+        type:
+          $ref: '#/components/schemas/type'
+
+        roomsCount:
+          type: integer
+          example: 4
+          minimum: 1
+          maximum: 8
+
+        guestsCount:
+          type: integer
+          example: 4
+          minimum: 1
+          maximum: 10
+
+        price:
+          type: integer
+          example: 10000
+          minimum: 100
+          maximum: 100000
+
+        coordinates:
+          $ref: '#/components/schemas/coordinates'
+
+        comforts:
+          $ref: '#/components/schemas/comforts'
+
+    offer:
+      type: object
+      required:
+        - title
+        - description
+        - createdAt
+        - city
+        - preview
+        - photos
+        - isPremium
+        - isFavorite
+        - rating
+        - type
+        - roomsCount
+        - guestsCount
+        - price
+        - comforts
+        - coordinates
+        - author
+        - commentsCount
+
+      properties:
+        id:
+          type: string
+          example: 6329c3d6a04ab1061c6425ea
+
+        title:
+          type: string
+          example: 'Hotel California'
+
+        description:
+          type: string
+          example: 'Such a lovely place'
+
+        createdAt:
+          type: string
+          example: '2022-04-06T08:45:40.283Z'
+
+        city:
+          $ref: '#/components/schemas/cities'
+
+        preview:
+          type: string
+          example: hotel.jpg
+
+        photos:
+          $ref: '#/components/schemas/photos'
+
+        isPremium:
+          type: boolean
+          example: true
+
+        isFavorite:
+          type: boolean
+          example: true
+
+        rating:
+          type: number
+          example: 4.5
+
+        type:
+          $ref: '#/components/schemas/type'
+
+        roomsCount:
+          type: integer
+          example: 4
+
+        guestsCount:
+          type: integer
+          example: 4
+
+        price:
+          type: integer
+          example: 10000
+
+        comforts:
+          $ref: '#/components/schemas/comforts'
+
+        author:
+          $ref: '#/components/schemas/user'
+
+        commentsCount:
+          type: integer
+          example: 50
+
+        coordinates:
+          $ref: '#/components/schemas/coordinates'
+
+    cities:
+      type: string
+      enum:
+        - Paris
+        - Cologne
+        - Brussels
+        - Amsterdam
+        - Hamburg
+        - Dusseldorf
+
+    type:
+      type: string
+      enum:
+        - Apartment
+        - House
+        - Room
+        - Hotel
+
+    comforts:
+      type: array
+      items:
+        type: string
+        enum:
+          - Breakfast
+          - Air conditioning
+          - Laptop friendly workspace
+          - Baby seat
+          - Washer
+          - Towels
+          - Fridge
+
+    photos:
+      type: array
+      items:
+        type: string
+      example:
+        - photo1.jpg
+        - photo2.jpg
+        - photo3.jpg
+        - photo4.jpg
+        - photo5.jpg
+        - photo6.jpg
+
+    coordinates:
+      type: array
+      items:
+        type: string
+      example:
+        - 53.550341 # latitude
+        - 10.000654 # longitude
