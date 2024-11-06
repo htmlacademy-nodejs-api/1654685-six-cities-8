@@ -20,7 +20,7 @@ export class CategoryController extends BaseController {
 
     this.logger.info('Регистрация маршрутов для CategoryController…');
 
-    this.addRoute({ path: '/id/:id', method: HttpMethod.Get, handler: this.findById });
+    this.addRoute({ path: '/id/:id', method: HttpMethod.get, handler: this.findById });
   }
 
   public async findById({ params }: Request, res: Response) {

@@ -1,7 +1,7 @@
 import { types } from '@typegoose/typegoose';
 import { inject, injectable } from 'inversify';
 
-import { UpdateOfferDtoOfferDto } from './dto/update-offer.dto.js';
+import { UpdateOfferDto } from './dto/update-offer.dto.js';
 import { Component, City, SortType } from '../../types/index.js';
 import { OfferService } from './offer-service.interface.js';
 import { CreateOfferDto } from './dto/create-offer.dto.js';
@@ -40,7 +40,7 @@ export class DefaultOfferService implements OfferService {
 
   public async updateById(
     offerId: string,
-    dto: UpdateOfferDtoOfferDto
+    dto: UpdateOfferDto
   ): Promise<types.DocumentType<OfferEntity> | null> {
     return this.offerModel.findByIdAndUpdate(offerId, dto, { new: true }).populate(['author']);
   }

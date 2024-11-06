@@ -38,13 +38,12 @@ export class ImportCommand implements Command {
   }
 
   private async saveOffer(offer: Offer) {
-    const user = await this.userService.findOrCreate(
+    const author = await this.userService.findOrCreate(
       { ...offer.author, password: DEFAULT_USER_PASS },
       this.salt
     );
 
     await this.offerService.create({
-      userId: user.id,
       title: offer.title,
       description: offer.description,
       type: offer.type,
@@ -54,10 +53,10 @@ export class ImportCommand implements Command {
       photos: offer.photos,
       price: Number(offer.price),
       isPremium: offer.isPremium,
-      rating: Number(offer.rating),
       roomsCount: Number(offer.roomsCount),
       guestsCount: Number(offer.guestsCount),
       comforts: offer.comforts,
+      author: author.id,
       coordinates: offer.coordinates,
     });
   }
