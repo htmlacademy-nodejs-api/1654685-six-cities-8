@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
 import express, { Express } from 'express';
 
-import { Controller, ExceptionFilter } from '../shared/libs/rest/index.js';
+import { Controller, ExceptionFilter, ParseTokenMiddleware } from '../shared/libs/rest/index.js';
 import { DatabaseClient } from '../shared/libs/database-client/index.js';
 import { Config, RestSchema } from '../shared/libs/config/index.js';
 import { Logger } from '../shared/libs/logger/index.js';
@@ -18,12 +18,14 @@ export class RestApplication {
     @inject(Component.CommentController)
     @inject(Component.CategoryController)
     @inject(Component.ExceptionFilter)
+    @inject(Component.AuthExceptionFilter)
     private readonly databaseClient: DatabaseClient,
     private readonly userController: Controller,
     private readonly offerController: Controller,
     private readonly commentController: Controller,
     private readonly categoryController: Controller,
-    private readonly appExceptionFilter: ExceptionFilter
+    private readonly appExceptionFilter: ExceptionFilter,
+    private readonly authExceptionFilter: ExceptionFilter
   ) {
     this.server = express();
   }
@@ -50,14 +52,17 @@ export class RestApplication {
 
   private initMiddleware() {
     this.logger.info('Инициализация middleware-ов');
+    const authenticateMiddleware = new ParseTokenMiddleware(this.config.get('JWT_SECRET'));
     this.server.use(express.json());
     this.server.use('/upload', express.static(this.config.get('UPLOAD_DIRECTORY')));
+    this.server.use(authenticateMiddleware.execute.bind(authenticateMiddleware));
     this.logger.info('Инициализация middleware-ов завершена');
   }
 
   private initExceptionFilters() {
     this.logger.info('Инициализация фильтров исключений');
     this.server.use(this.appExceptionFilter.catch.bind(this.appExceptionFilter));
+    this.server.use(this.authExceptionFilter.catch.bind(this.authExceptionFilter));
     this.logger.info('Инициализация фильтров исключений завершена');
   }
 

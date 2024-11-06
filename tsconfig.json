@@ -1,4 +1,5 @@
 {
+  "ts-node": { "esm": true },
   "compilerOptions": {
     "target": "ES2022",
     "module": "NodeNext",
@@ -22,15 +23,13 @@
     "outDir": "./dist",
     "emitDecoratorMetadata": true,
     "baseUrl": "./",
-    "types": [
-      "node"
-    ],
-    "lib": [
-      "ESNext"
-    ]
+    "types": ["node"],
+    "typeRoots": ["node_modules/@types", "types"],
+    "lib": ["ESNext"]
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "types/*.d.ts"
   ],
   "exclude": [
     "node_modules",

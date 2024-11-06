@@ -67,46 +67,46 @@ export class OfferController extends BaseController {
     ]);
   }
 
-  public async show({ params }: Request<ParamOfferId>, res: Response) {
+  public async show({ params }: Request<ParamOfferId>, response: Response) {
     const { offerId } = params;
     const offer = await this.offerService.findById(offerId);
 
-    this.ok(res, fillDTO(OfferRdo, offer));
+    this.ok(response, fillDTO(OfferRdo, offer));
   }
 
-  public async index(req: AllOffersRequest, res: Response) {
+  public async index(request: AllOffersRequest, response: Response) {
     let count: number | undefined = undefined;
 
-    if (req.query.count !== undefined) {
-      count = +req.query.count;
+    if (request.query.count !== undefined) {
+      count = +request.query.count;
     }
 
     const offers = await this.offerService.find(count);
 
-    this.ok(res, fillDTO(OfferRdo, offers));
+    this.ok(response, fillDTO(OfferRdo, offers));
   }
 
-  public async create({ body }: CreateOfferRequest, res: Response) {
+  public async create({ body }: CreateOfferRequest, response: Response) {
     const result = await this.offerService.create(body);
     const offer = await this.offerService.findById(result.id);
-    this.created(res, fillDTO(OfferRdo, offer));
+    this.created(response, fillDTO(OfferRdo, offer));
   }
 
-  public async delete({ params }: Request<ParamOfferId>, res: Response): Promise<void> {
+  public async delete({ params }: Request<ParamOfferId>, response: Response): Promise<void> {
     const { offerId } = params;
     const offer = await this.offerService.deleteById(offerId);
 
-    this.noContent(res, offer);
+    this.noContent(response, offer);
   }
 
   public async update(
     { body, params }: Request<ParamOfferId, unknown, UpdateOfferDto>,
-    res: Response
+    response: Response
   ): Promise<void> {
     const result = await this.offerService.updateById(params.offerId, body);
     const updatedOffer = await this.offerService.findById(result?.id);
 
-    this.ok(res, fillDTO(OfferRdo, updatedOffer));
+    this.ok(response, fillDTO(OfferRdo, updatedOffer));
   }
 
   public async getPremiumOfferByCity() {}
