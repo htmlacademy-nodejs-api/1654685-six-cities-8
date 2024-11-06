@@ -5,9 +5,9 @@ import { Component } from '../../types/index.js';
 import { fillDTO } from '../../helpers/common.js';
 
 import { BaseController, HttpError, HttpMethod } from '../../libs/rest/index.js';
-import { CreateUserRequest } from './create-user-request.type.js';
+import { CreateUserRequest } from './type/create-user-request.type.js';
+import { LoginUserRequest } from './type/login-user-request.type.js';
 import { Config, RestSchema } from '../../libs/config/index.js';
-import { LoginUserRequest } from './login-user-request.type.js';
 import { UserService } from './user-service.interface.js';
 import { Logger } from '../../libs/logger/index.js';
 import { UserRdo } from './rdo/user.rdo.js';
@@ -24,8 +24,8 @@ export class UserController extends BaseController {
 
     this.logger.info('Регистрация маршрутов для UserController…');
 
-    this.addRoute({ path: '/register', method: HttpMethod.Post, handler: this.create });
-    this.addRoute({ path: '/login', method: HttpMethod.Post, handler: this.login });
+    this.addRoute({ path: '/register', method: HttpMethod.post, handler: this.create });
+    this.addRoute({ path: '/login', method: HttpMethod.post, handler: this.login });
   }
 
   public async create({ body }: CreateUserRequest, res: Response): Promise<void> {

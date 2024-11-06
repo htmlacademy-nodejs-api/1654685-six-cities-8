@@ -1,3 +1,5 @@
+export * from './document-exists.interface.js';
+
 export * from './category.type.js';
 export * from './comment.type.js';
 export * from './common.type.js';

@@ -4,12 +4,7 @@ import { createSHA256 } from '../../helpers/index.js';
 
 export interface UserEntity extends defaultClasses.Base {}
 
-@modelOptions({
-  schemaOptions: {
-    collection: 'users',
-    timestamps: true,
-  },
-})
+@modelOptions({ schemaOptions: { collection: 'users', timestamps: true } })
 export class UserEntity extends defaultClasses.TimeStamps implements User {
   @prop({ required: true })
   public name: string;
