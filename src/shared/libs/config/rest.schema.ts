@@ -42,7 +42,7 @@ export const configRestSchema = convict<RestSchema>({
     doc: 'Password to connect to the database',
     format: String,
     env: 'DB_PASSWORD',
-    default: null,
+    default: '',
   },
   DB_PORT: {
     doc: 'Port to connect to the database',

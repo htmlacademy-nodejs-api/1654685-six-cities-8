@@ -39,12 +39,7 @@ export class ConsoleLogger implements Logger {
     const resultMessage = error instanceof Error ? error.message : error;
 
     console.error(
-      chalk.red(
-        ConsoleLogger.stylizeMessage(
-          resultMessage || DEFAULT_ERROR,
-          'whiteBright'
-        )
-      ),
+      chalk.red(ConsoleLogger.stylizeMessage(resultMessage || DEFAULT_ERROR, 'whiteBright')),
       ...attrs
     );
   }

@@ -4,12 +4,7 @@ import { UserEntity } from '../user/index.js';
 
 export interface OfferEntity extends defaultClasses.Base {}
 
-@modelOptions({
-  schemaOptions: {
-    collection: 'offers',
-    timestamps: true,
-  },
-})
+@modelOptions({ schemaOptions: { collection: 'offers', timestamps: true } })
 export class OfferEntity extends defaultClasses.TimeStamps {
   @prop({ trim: true, required: true })
   public title: string;
@@ -50,7 +45,7 @@ export class OfferEntity extends defaultClasses.TimeStamps {
   @prop({ ref: UserEntity, required: true })
   public author: Ref<UserEntity>;
 
-  @prop({ required: true })
+  @prop({ type: () => Number, required: true })
   public coordinates: number[];
 }
 

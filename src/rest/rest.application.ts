@@ -9,22 +9,26 @@ import { Component } from '../shared/types/index.js';
 
 @injectable()
 export class RestApplication {
-  private readonly server: Express;
-
   constructor(
     @inject(Component.Logger) private readonly logger: Logger,
     @inject(Component.Config) private readonly config: Config<RestSchema>,
     @inject(Component.DatabaseClient)
-    @inject(Component.ExceptionFilter)
-    private readonly appExceptionFilter: ExceptionFilter,
     @inject(Component.UserController)
-    private readonly userController: Controller,
     @inject(Component.OfferController)
+    @inject(Component.CommentController)
+    @inject(Component.CategoryController)
+    @inject(Component.ExceptionFilter)
+    private readonly databaseClient: DatabaseClient,
+    private readonly userController: Controller,
     private readonly offerController: Controller,
-    private readonly databaseClient: DatabaseClient
+    private readonly commentController: Controller,
+    private readonly categoryController: Controller,
+    private readonly appExceptionFilter: ExceptionFilter
   ) {
     this.server = express();
   }
+
+  private readonly server: Express;
 
   private initServer() {
     this.logger.info('Инициализация сервера…');
@@ -39,6 +43,8 @@ export class RestApplication {
     this.logger.info('Инициализация контроллеров');
     this.server.use('/users', this.userController.router);
     this.server.use('/offers', this.offerController.router);
+    this.server.use('/comment', this.commentController.router);
+    this.server.use('/category', this.categoryController.router);
     this.logger.info('Инициализация контроллеров завершена');
   }
 

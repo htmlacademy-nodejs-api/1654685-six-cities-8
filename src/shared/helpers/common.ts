@@ -1,3 +1,4 @@
+import { ClassConstructor, plainToInstance } from 'class-transformer';
 import dayjs from 'dayjs';
 import {
   DELIMITER,
@@ -5,7 +6,6 @@ import {
   FIRST_WEEK_DAY,
   StringBooleanValue,
 } from '../../constants/index.js';
-import { ClassConstructor, plainToInstance } from "class-transformer";
 
 export function generateRandomNumber(min: number, max: number, fractionDigits = 0) {
   return +(Math.random() * (max - min) + min).toFixed(fractionDigits);
